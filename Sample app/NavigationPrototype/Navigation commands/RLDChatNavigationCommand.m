@@ -4,7 +4,6 @@ static NSString *const originClassNameConnections = @"RLDConnectionsViewControll
 static NSString *const originClassNameProfile = @"RLDProfileViewController";
 
 static NSString *const destinationClassName = @"RLDChatViewController";
-static NSString *const navigationSetupClassName = @"RLDNavigationSetup";
 
 @implementation RLDChatNavigationCommand
 
