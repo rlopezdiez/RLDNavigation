@@ -1,0 +1,111 @@
+#import "RLDDirectNavigationCommand+PathSearching.h"
+
+#import "RLDNavigationSetup.h"
+
+@implementation RLDNavigationCommand (PathSearching)
+
+- (NSArray *)navigationCommandClassChainInClasses:(id<NSFastEnumeration>)availableCommandsClasses
+                              withNavigationSetup:(RLDNavigationSetup *)navigationSetup {
+    NSMutableArray *originNavigationCommandClasses = [self navigationCommandClassesInClasses:availableCommandsClasses
+                                                                                  withOrigin:navigationSetup.origin
+                                                                                 destination:nil];
+    NSMutableArray *directNavigationCommandClasses = [self navigationCommandClassesInClasses:originNavigationCommandClasses
+                                                                                  withOrigin:navigationSetup.origin
+                                                                                 destination:navigationSetup.destination];
+    if ([directNavigationCommandClasses count]) {
+        return @[[directNavigationCommandClasses firstObject]];
+    }
+    
+    NSMapTable *linksBetweenNavigationCommands = [NSMapTable weakToWeakObjectsMapTable];
+    
+    NSMutableArray *nextNavigationCommandClasses = [originNavigationCommandClasses mutableCopy];
+    
+    __block Class lastNavigationCommandClassInChain = nil;
+    while (nextNavigationCommandClasses.count) {
+        
+        Class parentConversionRate = [nextNavigationCommandClasses firstObject];
+        [nextNavigationCommandClasses removeObject:parentConversionRate];
+        
+        [self enumerateNavigationCommandClasses:availableCommandsClasses
+                                     withOrigin:parentConversionRate.destination
+                                    destination:nil
+                                     usingBlock:^(Class navigationCommandClass, BOOL *stop) {
+                                         [linksBetweenNavigationCommands setObject:parentConversionRate forKey:navigationCommandClass];
+                                         if (navigationCommandClass.destination == navigationSetup.destination) {
+                                             lastNavigationCommandClassInChain = navigationCommandClass;
+                                             *stop = YES;
+                                         } else {
+                                             [nextNavigationCommandClasses addObject:navigationCommandClass];
+                                         }
+                                     }];
+        
+        if (lastNavigationCommandClassInChain) {
+            return [self navigationCommandClassChainWithOrigins:originNavigationCommandClasses
+                                 linksBetweenNavigationCommands:linksBetweenNavigationCommands
+                                     lastNavigationCommandClass:lastNavigationCommandClassInChain];
+        }
+    }
+    
+    return nil;
+}
+
+- (NSMutableArray *)navigationCommandClassesInClasses:(id<NSFastEnumeration>)classes withOrigin:(Class)origin destination:(Class)destination {
+    NSMutableArray *navigationCommandClasses = [NSMutableArray array];
+    
+    [self enumerateNavigationCommandClasses:classes
+                                 withOrigin:origin
+                                destination:destination
+                                 usingBlock:^(Class navigationCommandClass, BOOL *stop) {
+                                     [navigationCommandClasses addObject:navigationCommandClass];
+                                 }];
+    
+    return navigationCommandClasses;
+}
+
+- (void)enumerateNavigationCommandClasses:(id<NSFastEnumeration>)navigationCommandClasses
+                               withOrigin:(Class)origin
+                              destination:(Class)destination
+                               usingBlock:(void (^)(Class navigationCommandClass, BOOL *stop))block {
+    
+    NSParameterAssert(block);
+    RLDNavigationSetup *navigationSetup = [[RLDNavigationSetup alloc] initWithOrigin:origin
+                                                                         destination:destination
+                                                                          properties:self.navigationSetup.properties
+                                                                         breadcrumbs:nil
+                                                                navigationController:self.navigationSetup.navigationController];
+    
+    BOOL shouldStop = NO;
+    BOOL found;
+    for (Class navigationCommandClass in navigationCommandClasses) {
+        if (!destination) {
+            navigationSetup.destination = navigationCommandClass.destination;
+        }
+        if (([navigationCommandClass canHandleNavigationSetup:navigationSetup]) && (navigationCommandClass.destination)) {
+            found = YES;
+            block(navigationCommandClass, &shouldStop);
+        }
+        if (shouldStop) break;
+    }
+    
+}
+
+- (NSArray *)navigationCommandClassChainWithOrigins:(NSArray *)originNavigationCommandClasses
+                     linksBetweenNavigationCommands:(NSMapTable *)linksBetweenNavigationCommands
+                         lastNavigationCommandClass:(Class)lastNavigationCommandClass {
+    
+    NSMutableArray *navigationCommandClassChain = [NSMutableArray array];
+    
+    Class class = lastNavigationCommandClass;
+    BOOL classIsOrigin = NO;
+    while (class) {
+        [navigationCommandClassChain insertObject:class atIndex:0];
+        if (classIsOrigin) break;
+        
+        class = [linksBetweenNavigationCommands objectForKey:class];
+        classIsOrigin = [originNavigationCommandClasses containsObject:class];
+    }
+    
+    return [navigationCommandClassChain copy];
+}
+
+@end
