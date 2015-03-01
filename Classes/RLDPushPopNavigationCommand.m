@@ -3,6 +3,8 @@
 #import "RLDNavigationSetup.h"
 #import "UINavigationController+RLDNavigationSetup.h"
 
+#import "NSObject+KeyValueCompliance.h"
+
 static NSString *const defaultnibName = @"Main";
 
 @implementation RLDPushPopNavigationCommand
@@ -77,9 +79,9 @@ static NSString *const defaultnibName = @"Main";
     [viewController loadView];
     
     [[(RLDNavigationSetup *)self.navigationSetup properties] enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-        @try {
+        if ([viewController isKeyValueCompliantForKey:key]) {
             [viewController setValue:value forKey:key];
-        } @catch (NSException *exception) {}
+        }
     }];
 }
 
