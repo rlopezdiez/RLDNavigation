@@ -3,7 +3,7 @@
 #import "RLDNavigationSetup.h"
 #import "UINavigationController+RLDNavigationSetup.h"
 
-#import "NSObject+KeyValueCompliance.h"
+#import "NSObject+PropertyChecking.h"
 
 static NSString *const defaultnibName = @"Main";
 
@@ -79,7 +79,7 @@ static NSString *const defaultnibName = @"Main";
     [viewController loadView];
     
     [[(RLDNavigationSetup *)self.navigationSetup properties] enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-        if ([viewController isKeyValueCompliantForKey:key]) {
+        if ([viewController canSetProperty:key]) {
             [viewController setValue:value forKey:key];
         }
     }];

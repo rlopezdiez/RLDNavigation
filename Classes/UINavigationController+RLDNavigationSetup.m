@@ -2,7 +2,7 @@
 
 #import "RLDNavigationSetup.h"
 
-#import "NSObject+KeyValueCompliance.h"
+#import "NSObject+PropertyChecking.h"
 
 @interface UIViewController (RLDNavigationSetup)
 
@@ -34,7 +34,7 @@
     
     __block BOOL isDestinationViewController = YES;
     [navigationSetup.properties enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-        if ([self isKeyValueCompliantForKey:key] && ![[self valueForKey:key] isEqual:value]) {
+        if ([self hasProperty:key] && ![[self valueForKey:key] isEqual:value]) {
             isDestinationViewController = NO;
             *stop = YES;
         }

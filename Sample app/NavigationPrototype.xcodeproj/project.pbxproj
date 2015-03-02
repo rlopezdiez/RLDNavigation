@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45144EE91AA3D9E000752BCB /* NSObject+KeyValueCompliance.m in Sources */ = {isa = PBXBuildFile; fileRef = 45144EE81AA3D9E000752BCB /* NSObject+KeyValueCompliance.m */; };
+		45144EE91AA3D9E000752BCB /* NSObject+PropertyChecking.m in Sources */ = {isa = PBXBuildFile; fileRef = 45144EE81AA3D9E000752BCB /* NSObject+PropertyChecking.m */; };
 		458B52A81A9F32A900E2E7D0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 458B52A71A9F32A900E2E7D0 /* main.m */; };
 		458B52AB1A9F32A900E2E7D0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 458B52AA1A9F32A900E2E7D0 /* AppDelegate.m */; };
 		458B52B11A9F32A900E2E7D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 458B52AF1A9F32A900E2E7D0 /* Main.storyboard */; };
@@ -35,8 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		45144EE71AA3D9E000752BCB /* NSObject+KeyValueCompliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KeyValueCompliance.h"; sourceTree = "<group>"; };
-		45144EE81AA3D9E000752BCB /* NSObject+KeyValueCompliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KeyValueCompliance.m"; sourceTree = "<group>"; };
+		45144EE71AA3D9E000752BCB /* NSObject+PropertyChecking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PropertyChecking.h"; sourceTree = "<group>"; };
+		45144EE81AA3D9E000752BCB /* NSObject+PropertyChecking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PropertyChecking.m"; sourceTree = "<group>"; };
 		458B52A21A9F32A900E2E7D0 /* NavigationPrototype.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationPrototype.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		458B52A61A9F32A900E2E7D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		458B52A71A9F32A900E2E7D0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -165,8 +165,8 @@
 				45A60E7F1AA22E63004FB8F4 /* RLDNavigationSetup+RLDNavigationCommand.m */,
 				45A60E841AA22E63004FB8F4 /* UINavigationController+RLDNavigationSetup.h */,
 				45A60E851AA22E63004FB8F4 /* UINavigationController+RLDNavigationSetup.m */,
-				45144EE71AA3D9E000752BCB /* NSObject+KeyValueCompliance.h */,
-				45144EE81AA3D9E000752BCB /* NSObject+KeyValueCompliance.m */,
+				45144EE71AA3D9E000752BCB /* NSObject+PropertyChecking.h */,
+				45144EE81AA3D9E000752BCB /* NSObject+PropertyChecking.m */,
 				45A60E7C1AA22E63004FB8F4 /* RLDNavigationCommand.h */,
 				45A60E7D1AA22E63004FB8F4 /* RLDNavigationCommand.m */,
 				45B1C7221AA2860200B50484 /* RLDBreadcrumbNavigationCommand.h */,
@@ -280,7 +280,7 @@
 				45CF6DEC1AA0395800E76F62 /* RLDProfileNavigationCommand.m in Sources */,
 				45B1C71B1AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.m in Sources */,
 				45B1C7241AA2860200B50484 /* RLDBreadcrumbNavigationCommand.m in Sources */,
-				45144EE91AA3D9E000752BCB /* NSObject+KeyValueCompliance.m in Sources */,
+				45144EE91AA3D9E000752BCB /* NSObject+PropertyChecking.m in Sources */,
 				458B52DA1A9F38C400E2E7D0 /* RLDConnectionsViewController.m in Sources */,
 				45CF6DE81AA0395800E76F62 /* RLDChatNavigationCommand.m in Sources */,
 				458B52DC1A9F38C400E2E7D0 /* RLDFolderViewController.m in Sources */,
