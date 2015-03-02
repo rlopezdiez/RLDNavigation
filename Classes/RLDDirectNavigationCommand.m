@@ -29,8 +29,6 @@
 #pragma mark - Execution
 
 - (void)execute {
-    NSLog(@"%@", self.navigationCommandClassChain);
-    
     RLDNavigationSetup *navigationSetup = [self.navigationSetup copy];
     
     for (Class navigationCommandClass in self.navigationCommandClassChain) {
