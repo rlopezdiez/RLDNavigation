@@ -10,7 +10,7 @@ It implements routing using an [algorithm](http://en.wikipedia.org/wiki/Breadth-
 
 ### Environment setup
 
-The easiest setup involes subclassing `RLDPushPopNavigationCommand` for each of the view controllers of your app, defining the possible flows that can lead to that view controller and how to initialize it from a storyboard, by overriding these class methods: 
+The easiest setup involves subclassing `RLDPushPopNavigationCommand` for each of the view controllers of your app, defining the possible flows that can lead to that view controller and how to initialize it from a storyboard, by overriding these class methods: 
 
 ```objectivec
 + (NSArray *)origins;
