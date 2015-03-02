@@ -19,7 +19,7 @@ The easiest setup involes subclassing `RLDPushPopNavigationCommand` for each of 
 + (NSString *)nibName; // Defaults to @"Main"
 ```
 
-You can implement more advanced navigation commands by creating new classes conforming to the `RLDNavigationCommand` protocol or subclassing the homographic class.
+You can implement more advanced navigation commands by creating new classes conforming to the `RLDNavigationCommand` protocol or subclassing the class cluster with the same name.
 
 ### Navigating between view controllers
 
@@ -43,7 +43,7 @@ UINavigationController *navigationController = self.navigationController;
 
 If you need to pass parameters or customize the view controllers when navigating to them, you can specify a dictionary of properties, and [KVC](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/KeyValueCoding/Articles/BasicPrinciples.html#//apple_ref/doc/uid/20002170-178791) will be used to try to set all properties for every newly instantiated view controller in the navigation chain. 
 
-For instance, if three view controllers are pushed when navigating in this example, all of them will get its `userName` property set to `John Doe`. If case any of the view controllers doesn't have this property, it will be ignored:
+For instance, if three view controllers are pushed when navigating in this example, all of them will get its `userName` property set to `John Doe`. In case any of the view controllers doesn't have this property, it will be ignored:
 
 ```objectivec
 [[RLDNavigationSetup setuptWithDestination:classOfDestinationViewController
