@@ -63,7 +63,7 @@
 
 - (NSArray *)navigationCommandClassChain {
     if (!_navigationCommandClassChain) {
-        _navigationCommandClassChain = [self navigationCommandClassChainInClasses:self.availableCommandClasses
+        _navigationCommandClassChain = [self navigationCommandClassChainInClasses:[[self class] availableCommandClasses]
                                                               withNavigationSetup:self.navigationSetup];
     }
     return _navigationCommandClassChain;

@@ -36,7 +36,7 @@ static NSMutableSet *_availableCommandClasses;
             : NO);
 }
 
-- (NSSet *)availableCommandClasses {
++ (NSSet *)availableCommandClasses {
     return _availableCommandClasses;
 }
 

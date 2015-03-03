@@ -3,7 +3,6 @@
 @interface RLDDirectNavigationCommand (NavigationCommandRegister)
 
 + (void)registerClassesConformingToNavigationCommandProtocol;
-
-@property (readonly) NSSet *availableCommandClasses;
++ (NSSet *)availableCommandClasses;
 
 @end
