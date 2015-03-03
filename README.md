@@ -10,7 +10,7 @@ It implements routing using an [algorithm](http://en.wikipedia.org/wiki/Breadth-
 
 ### Environment setup
 
-The easiest setup involves subclassing `RLDPushPopNavigationCommand` for each of the view controllers of your app, defining the possible flows that can lead to that view controller and how to initialize it from a storyboard, by overriding these class methods: 
+The easiest setup involves subclassing `RLDPushPopNavigationCommand` for each of the `destination` view controllers of your app, defining the possible flows that can lead to that view controller and how to initialize it, by overriding these class methods: 
 
 ```objectivec
 + (NSArray *)origins;
@@ -19,7 +19,11 @@ The easiest setup involves subclassing `RLDPushPopNavigationCommand` for each of
 + (NSString *)nibName; // Defaults to @"Main"
 ```
 
-You can implement more advanced navigation commands by creating new classes conforming to the `RLDNavigationCommand` protocol or subclassing the class cluster with the same name.
+You should return in `origins` an array of all the view controller classes that can lead to the one referred by the navigation command in `destination`. If you return an empty array or `nil`, the `destination` view controller class will be accessible from any other view controller.
+
+If your navigation command doesn't implement `viewControllerStoryboardIdentifier` and `nibName`, the view controller will be initialised by allocating it and calling its `init` method.
+
+You can implement more advanced navigation commands by creating new classes conforming to the `RLDNavigationCommand` protocol or by subclassing the class cluster with the same name.
 
 ### Navigating between view controllers
 
@@ -35,7 +39,7 @@ Class classOfDestinationViewController = NSClassFromString(@"ViewControllerClass
 UINavigationController *navigationController = self.navigationController;
 
 [[RLDNavigationSetup setuptWithDestination:classOfDestinationViewController
-                      navigationController:navigationController] go];
+navigationController:navigationController] go];
 
 ```
 
@@ -43,12 +47,12 @@ UINavigationController *navigationController = self.navigationController;
 
 If you need to pass parameters or customize the view controllers when navigating to them, you can specify a dictionary of properties, and [KVC](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/KeyValueCoding/Articles/BasicPrinciples.html#//apple_ref/doc/uid/20002170-178791) will be used to try to set all properties for every newly instantiated view controller in the navigation chain. 
 
-For instance, if three view controllers are pushed when navigating in this example, all of them will get its `userName` property set to `John Doe`. In case any of the view controllers doesn't have this property, it will be ignored:
+For instance, if three view controllers are pushed when navigating in this example, all of them will get its `userName` property set to `John Doe`. In case any of the view controllers doesn't have this property, or it's readonly, it will be ignored:
 
 ```objectivec
 [[RLDNavigationSetup setuptWithDestination:classOfDestinationViewController
-                                properties:@{@"userName" : @"John Doe"}
-                      navigationController:navigationController] go];
+properties:@{@"userName" : @"John Doe"}
+navigationController:navigationController] go];
 ```
 
 #### Breadcrumbs
@@ -57,9 +61,9 @@ You can override the fully automatic flow calculation by specifying intermediate
 
 ```objectivec
 [[RLDNavigationSetup setuptWithDestination:classOfDestinationViewController
-                                properties:@{@"userName" : @"John Doe"}
-                               breadcrumbs:@(firstIntermediateClass, secondIntermediateClass)
-                      navigationController:navigationController] go];
+properties:@{@"userName" : @"John Doe"}
+breadcrumbs:@(firstIntermediateClass, secondIntermediateClass)
+navigationController:navigationController] go];
 ```
 
 Breadcrumbs can help you creating complex routes, and are also a helpful way to replace URL-like navigation definitions.
@@ -69,9 +73,9 @@ Breadcrumbs can help you creating complex routes, and are also a helpful way to 
 ### Using CocoaPods
 
 1. Include the following line in your `Podfile`:
-   ```
-   pod 'RLDNavigation', :git => 'https://github.com/rlopezdiez/RLDNavigation'
-   ```
+```
+pod 'RLDNavigation', :git => 'https://github.com/rlopezdiez/RLDNavigation'
+```
 2. Run `pod install`
 
 ### Manually
