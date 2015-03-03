@@ -1,0 +1,342 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		45DC595A1AA4DFD400E9AEB1 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC59591AA4DFD400E9AEB1 /* Tests.m */; };
+		45DC595C1AA4DFFB00E9AEB1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45DC595B1AA4DFFB00E9AEB1 /* Info.plist */; };
+		45DC59731AA4E10700E9AEB1 /* NSObject+PropertyChecking.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC595F1AA4E10700E9AEB1 /* NSObject+PropertyChecking.m */; };
+		45DC59741AA4E10700E9AEB1 /* RLDBreadcrumbNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC59611AA4E10700E9AEB1 /* RLDBreadcrumbNavigationCommand.m */; };
+		45DC59751AA4E10700E9AEB1 /* RLDDirectNavigationCommand+NavigationCommandRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC59631AA4E10700E9AEB1 /* RLDDirectNavigationCommand+NavigationCommandRegister.m */; };
+		45DC59761AA4E10700E9AEB1 /* RLDDirectNavigationCommand+PathSearching.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC59651AA4E10700E9AEB1 /* RLDDirectNavigationCommand+PathSearching.m */; };
+		45DC59771AA4E10700E9AEB1 /* RLDDirectNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC59671AA4E10700E9AEB1 /* RLDDirectNavigationCommand.m */; };
+		45DC59781AA4E10700E9AEB1 /* RLDNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC596A1AA4E10700E9AEB1 /* RLDNavigationCommand.m */; };
+		45DC59791AA4E10700E9AEB1 /* RLDNavigationSetup+RLDNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC596C1AA4E10700E9AEB1 /* RLDNavigationSetup+RLDNavigationCommand.m */; };
+		45DC597A1AA4E10700E9AEB1 /* RLDNavigationSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC596E1AA4E10700E9AEB1 /* RLDNavigationSetup.m */; };
+		45DC597B1AA4E10700E9AEB1 /* RLDPushPopNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC59701AA4E10700E9AEB1 /* RLDPushPopNavigationCommand.m */; };
+		45DC597C1AA4E10700E9AEB1 /* UINavigationController+RLDNavigationSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC59721AA4E10700E9AEB1 /* UINavigationController+RLDNavigationSetup.m */; };
+		45DC597F1AA4E96F00E9AEB1 /* TestHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC597E1AA4E96F00E9AEB1 /* TestHelpers.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		452B76551AA4DF9600B321BC /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		45DC59591AA4DFD400E9AEB1 /* Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
+		45DC595B1AA4DFFB00E9AEB1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45DC595E1AA4E10700E9AEB1 /* NSObject+PropertyChecking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PropertyChecking.h"; sourceTree = "<group>"; };
+		45DC595F1AA4E10700E9AEB1 /* NSObject+PropertyChecking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PropertyChecking.m"; sourceTree = "<group>"; };
+		45DC59601AA4E10700E9AEB1 /* RLDBreadcrumbNavigationCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLDBreadcrumbNavigationCommand.h; sourceTree = "<group>"; };
+		45DC59611AA4E10700E9AEB1 /* RLDBreadcrumbNavigationCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLDBreadcrumbNavigationCommand.m; sourceTree = "<group>"; };
+		45DC59621AA4E10700E9AEB1 /* RLDDirectNavigationCommand+NavigationCommandRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLDDirectNavigationCommand+NavigationCommandRegister.h"; sourceTree = "<group>"; };
+		45DC59631AA4E10700E9AEB1 /* RLDDirectNavigationCommand+NavigationCommandRegister.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLDDirectNavigationCommand+NavigationCommandRegister.m"; sourceTree = "<group>"; };
+		45DC59641AA4E10700E9AEB1 /* RLDDirectNavigationCommand+PathSearching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLDDirectNavigationCommand+PathSearching.h"; sourceTree = "<group>"; };
+		45DC59651AA4E10700E9AEB1 /* RLDDirectNavigationCommand+PathSearching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLDDirectNavigationCommand+PathSearching.m"; sourceTree = "<group>"; };
+		45DC59661AA4E10700E9AEB1 /* RLDDirectNavigationCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLDDirectNavigationCommand.h; sourceTree = "<group>"; };
+		45DC59671AA4E10700E9AEB1 /* RLDDirectNavigationCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLDDirectNavigationCommand.m; sourceTree = "<group>"; };
+		45DC59681AA4E10700E9AEB1 /* RLDNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLDNavigation.h; sourceTree = "<group>"; };
+		45DC59691AA4E10700E9AEB1 /* RLDNavigationCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLDNavigationCommand.h; sourceTree = "<group>"; };
+		45DC596A1AA4E10700E9AEB1 /* RLDNavigationCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLDNavigationCommand.m; sourceTree = "<group>"; };
+		45DC596B1AA4E10700E9AEB1 /* RLDNavigationSetup+RLDNavigationCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLDNavigationSetup+RLDNavigationCommand.h"; sourceTree = "<group>"; };
+		45DC596C1AA4E10700E9AEB1 /* RLDNavigationSetup+RLDNavigationCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLDNavigationSetup+RLDNavigationCommand.m"; sourceTree = "<group>"; };
+		45DC596D1AA4E10700E9AEB1 /* RLDNavigationSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLDNavigationSetup.h; sourceTree = "<group>"; };
+		45DC596E1AA4E10700E9AEB1 /* RLDNavigationSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLDNavigationSetup.m; sourceTree = "<group>"; };
+		45DC596F1AA4E10700E9AEB1 /* RLDPushPopNavigationCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLDPushPopNavigationCommand.h; sourceTree = "<group>"; };
+		45DC59701AA4E10700E9AEB1 /* RLDPushPopNavigationCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLDPushPopNavigationCommand.m; sourceTree = "<group>"; };
+		45DC59711AA4E10700E9AEB1 /* UINavigationController+RLDNavigationSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+RLDNavigationSetup.h"; sourceTree = "<group>"; };
+		45DC59721AA4E10700E9AEB1 /* UINavigationController+RLDNavigationSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+RLDNavigationSetup.m"; sourceTree = "<group>"; };
+		45DC597D1AA4E96F00E9AEB1 /* TestHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHelpers.h; sourceTree = "<group>"; };
+		45DC597E1AA4E96F00E9AEB1 /* TestHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestHelpers.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		452B76521AA4DF9600B321BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		452B76331AA4DF9600B321BC = {
+			isa = PBXGroup;
+			children = (
+				45DC595D1AA4E10700E9AEB1 /* Classes */,
+				45DC59581AA4DFD400E9AEB1 /* Tests */,
+				452B763D1AA4DF9600B321BC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		452B763D1AA4DF9600B321BC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				452B76551AA4DF9600B321BC /* Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		45DC59581AA4DFD400E9AEB1 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				45DC59591AA4DFD400E9AEB1 /* Tests.m */,
+				45DC597D1AA4E96F00E9AEB1 /* TestHelpers.h */,
+				45DC597E1AA4E96F00E9AEB1 /* TestHelpers.m */,
+				45DC595B1AA4DFFB00E9AEB1 /* Info.plist */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		45DC595D1AA4E10700E9AEB1 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				45DC595E1AA4E10700E9AEB1 /* NSObject+PropertyChecking.h */,
+				45DC595F1AA4E10700E9AEB1 /* NSObject+PropertyChecking.m */,
+				45DC59601AA4E10700E9AEB1 /* RLDBreadcrumbNavigationCommand.h */,
+				45DC59611AA4E10700E9AEB1 /* RLDBreadcrumbNavigationCommand.m */,
+				45DC59621AA4E10700E9AEB1 /* RLDDirectNavigationCommand+NavigationCommandRegister.h */,
+				45DC59631AA4E10700E9AEB1 /* RLDDirectNavigationCommand+NavigationCommandRegister.m */,
+				45DC59641AA4E10700E9AEB1 /* RLDDirectNavigationCommand+PathSearching.h */,
+				45DC59651AA4E10700E9AEB1 /* RLDDirectNavigationCommand+PathSearching.m */,
+				45DC59661AA4E10700E9AEB1 /* RLDDirectNavigationCommand.h */,
+				45DC59671AA4E10700E9AEB1 /* RLDDirectNavigationCommand.m */,
+				45DC59681AA4E10700E9AEB1 /* RLDNavigation.h */,
+				45DC59691AA4E10700E9AEB1 /* RLDNavigationCommand.h */,
+				45DC596A1AA4E10700E9AEB1 /* RLDNavigationCommand.m */,
+				45DC596B1AA4E10700E9AEB1 /* RLDNavigationSetup+RLDNavigationCommand.h */,
+				45DC596C1AA4E10700E9AEB1 /* RLDNavigationSetup+RLDNavigationCommand.m */,
+				45DC596D1AA4E10700E9AEB1 /* RLDNavigationSetup.h */,
+				45DC596E1AA4E10700E9AEB1 /* RLDNavigationSetup.m */,
+				45DC596F1AA4E10700E9AEB1 /* RLDPushPopNavigationCommand.h */,
+				45DC59701AA4E10700E9AEB1 /* RLDPushPopNavigationCommand.m */,
+				45DC59711AA4E10700E9AEB1 /* UINavigationController+RLDNavigationSetup.h */,
+				45DC59721AA4E10700E9AEB1 /* UINavigationController+RLDNavigationSetup.m */,
+			);
+			name = Classes;
+			path = ../Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		452B76541AA4DF9600B321BC /* Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 452B76621AA4DF9600B321BC /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildPhases = (
+				452B76511AA4DF9600B321BC /* Sources */,
+				452B76521AA4DF9600B321BC /* Frameworks */,
+				452B76531AA4DF9600B321BC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tests;
+			productName = TestsTests;
+			productReference = 452B76551AA4DF9600B321BC /* Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		452B76341AA4DF9600B321BC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				TargetAttributes = {
+					452B76541AA4DF9600B321BC = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 452B763B1AA4DF9600B321BC;
+					};
+				};
+			};
+			buildConfigurationList = 452B76371AA4DF9600B321BC /* Build configuration list for PBXProject "Tests" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 452B76331AA4DF9600B321BC;
+			productRefGroup = 452B763D1AA4DF9600B321BC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				452B76541AA4DF9600B321BC /* Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		452B76531AA4DF9600B321BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45DC595C1AA4DFFB00E9AEB1 /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		452B76511AA4DF9600B321BC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45DC59751AA4E10700E9AEB1 /* RLDDirectNavigationCommand+NavigationCommandRegister.m in Sources */,
+				45DC59771AA4E10700E9AEB1 /* RLDDirectNavigationCommand.m in Sources */,
+				45DC597B1AA4E10700E9AEB1 /* RLDPushPopNavigationCommand.m in Sources */,
+				45DC597C1AA4E10700E9AEB1 /* UINavigationController+RLDNavigationSetup.m in Sources */,
+				45DC59781AA4E10700E9AEB1 /* RLDNavigationCommand.m in Sources */,
+				45DC59791AA4E10700E9AEB1 /* RLDNavigationSetup+RLDNavigationCommand.m in Sources */,
+				45DC59761AA4E10700E9AEB1 /* RLDDirectNavigationCommand+PathSearching.m in Sources */,
+				45DC597F1AA4E96F00E9AEB1 /* TestHelpers.m in Sources */,
+				45DC59731AA4E10700E9AEB1 /* NSObject+PropertyChecking.m in Sources */,
+				45DC59741AA4E10700E9AEB1 /* RLDBreadcrumbNavigationCommand.m in Sources */,
+				45DC595A1AA4DFD400E9AEB1 /* Tests.m in Sources */,
+				45DC597A1AA4E10700E9AEB1 /* RLDNavigationSetup.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		452B765D1AA4DF9600B321BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		452B765E1AA4DF9600B321BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		452B76631AA4DF9600B321BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Tests/info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "";
+			};
+			name = Debug;
+		};
+		452B76641AA4DF9600B321BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Tests/info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		452B76371AA4DF9600B321BC /* Build configuration list for PBXProject "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				452B765D1AA4DF9600B321BC /* Debug */,
+				452B765E1AA4DF9600B321BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		452B76621AA4DF9600B321BC /* Build configuration list for PBXNativeTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				452B76631AA4DF9600B321BC /* Debug */,
+				452B76641AA4DF9600B321BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 452B76341AA4DF9600B321BC /* Project object */;
+}

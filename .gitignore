@@ -1,4 +1,5 @@
-Sample app/NavigationPrototype.xcodeproj/project.xcworkspace/xcuserdata/
+Sample app/NavigationPrototype.xcodeproj/project.xcworkspace/*
+Tests/Tests.xcodeproj/project.xcworkspace/*
 NavigationPrototype.xccheckout
 .DS_Store
 .AppleDouble
