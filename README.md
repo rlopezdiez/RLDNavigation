@@ -39,7 +39,7 @@ Class classOfDestinationViewController = NSClassFromString(@"ViewControllerClass
 UINavigationController *navigationController = self.navigationController;
 
 [[RLDNavigationSetup setuptWithDestination:classOfDestinationViewController
-navigationController:navigationController] go];
+                      navigationController:navigationController] go];
 
 ```
 
@@ -51,8 +51,8 @@ For instance, if three view controllers are pushed when navigating in this examp
 
 ```objectivec
 [[RLDNavigationSetup setuptWithDestination:classOfDestinationViewController
-properties:@{@"userName" : @"John Doe"}
-navigationController:navigationController] go];
+                                properties:@{@"userName" : @"John Doe"}
+                      navigationController:navigationController] go];
 ```
 
 #### Breadcrumbs
@@ -61,9 +61,9 @@ You can override the fully automatic flow calculation by specifying intermediate
 
 ```objectivec
 [[RLDNavigationSetup setuptWithDestination:classOfDestinationViewController
-properties:@{@"userName" : @"John Doe"}
-breadcrumbs:@(firstIntermediateClass, secondIntermediateClass)
-navigationController:navigationController] go];
+                                properties:@{@"userName" : @"John Doe"}
+                               breadcrumbs:@(firstIntermediateClass, secondIntermediateClass)
+                      navigationController:navigationController] go];
 ```
 
 Breadcrumbs can help you creating complex routes, and are also a helpful way to replace URL-like navigation definitions.
@@ -73,9 +73,9 @@ Breadcrumbs can help you creating complex routes, and are also a helpful way to 
 ### Using CocoaPods
 
 1. Include the following line in your `Podfile`:
-```
-pod 'RLDNavigation', :git => 'https://github.com/rlopezdiez/RLDNavigation'
-```
+   ```
+   pod 'RLDNavigation', :git => 'https://github.com/rlopezdiez/RLDNavigation'
+   ```
 2. Run `pod install`
 
 ### Manually
