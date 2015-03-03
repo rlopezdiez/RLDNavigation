@@ -71,4 +71,18 @@
     return copy;
 }
 
+#pragma mark Description
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: %p; navigationController: %@; origin: %@; destination: %@; properties: %@; breadcrumbs: %@>",
+            [self class],
+            self,
+            self.navigationController,
+            self.origin,
+            self.destination,
+            self.properties,
+            self.breadcrumbs];
+}
+
 @end
