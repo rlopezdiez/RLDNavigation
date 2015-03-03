@@ -15,10 +15,13 @@
 
 @end
 
-@interface UINavigationController (TestingHelpers)
+@interface RLDCountingNavigationController : UINavigationController
 
 - (void)setRootViewControllerWithClass:(Class)class;
 - (BOOL)hasClassChain:(NSArray *)classChain;
 - (void)setClassChain:(NSArray *)classChain;
+
+@property (nonatomic, readonly) NSUInteger pushCount;
+@property (nonatomic, readonly) NSUInteger popCount;
 
 @end

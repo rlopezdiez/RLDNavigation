@@ -2,6 +2,7 @@
 
 #import <objc/runtime.h>
 
+#import "RLDNavigationSetup.h"
 #import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
 
 @implementation NSObject (TestingHelpers)
@@ -27,6 +28,8 @@
     [newClass setReturnValue:nil forSelector:@selector(nibName)];
     [newClass setReturnValue:nil forSelector:@selector(viewControllerStoryboardIdentifier)];
     [newClass setReturnValue:nil forSelector:@selector(animatesTransitions)];
+    
+    [newClass configureCanHandleNavigationSetupMethod];
         
     [RLDDirectNavigationCommand registerClassesConformingToNavigationCommandProtocol];
     
@@ -41,6 +44,17 @@
     const char *types = method_getTypeEncoding(method);
     IMP imp = [self impReturning:returnValue];
     class_addMethod(metaClass, selector, imp, types);
+}
+
++ (void)configureCanHandleNavigationSetupMethod {
+    SEL canHandleNavigationSetupSelector = @selector(canHandleNavigationSetup:);
+    Method method = class_getClassMethod(self, canHandleNavigationSetupSelector);
+    const char *types = method_getTypeEncoding(method);
+
+    IMP canHandleNavigationSetupMethodImplementation = imp_implementationWithBlock((id)^(id self, RLDNavigationSetup *navigationSetup) {
+        return navigationSetup.destination = [self destination];
+    });
+    class_addMethod(self, canHandleNavigationSetupSelector, canHandleNavigationSetupMethodImplementation, types);
 }
 
 + (IMP)impReturning:(id)returnValue {
@@ -60,11 +74,32 @@
 
 @end
 
-@implementation UINavigationController (TestingHelpers)
+@implementation RLDCountingNavigationController
+
+- (instancetype)init {
+    if (self = [super init]) {
+        [self resetCounters];
+    }
+    return self;
+}
+
+- (void)resetCounters {
+    _pushCount = 0;
+    _popCount = 0;
+}
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    _pushCount++;
+    [super pushViewController:viewController animated:animated];
+}
+
+- (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    _popCount++;
+    return [super popToViewController:viewController animated:animated];
+}
 
 - (void)setRootViewControllerWithClass:(Class)class {
-    UIViewController *viewController = [[class alloc] init];
-    self.viewControllers = @[viewController];
+    [self setClassChain:@[class]];
 }
 
 - (BOOL)hasClassChain:(NSArray *)classChain {
@@ -84,10 +119,12 @@
 }
 
 - (void)setClassChain:(NSArray *)classChain {
+    [self setViewControllers:@[]];
     for (Class class in classChain) {
         UIViewController *viewController = [[class alloc] init];
         [self pushViewController:viewController animated:NO];
     }
+    [self resetCounters];
 }
 
 @end
