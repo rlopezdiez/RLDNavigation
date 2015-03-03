@@ -66,8 +66,13 @@ static NSString *const defaultnibName = @"Main";
 }
 
 - (void)pushNewViewController {
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:self.class.nibName bundle:nil];
-    UIViewController *viewControllerToPresent = [storyBoard instantiateViewControllerWithIdentifier:[self.class viewControllerStoryboardIdentifier]];
+    UIViewController *viewControllerToPresent;
+    if ([self.class nibName] && [self.class viewControllerStoryboardIdentifier]) {
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:[self.class nibName] bundle:nil];
+        viewControllerToPresent = [storyBoard instantiateViewControllerWithIdentifier:[self.class viewControllerStoryboardIdentifier]];
+    } else {
+        viewControllerToPresent = [[[self.class destination] alloc] init];
+    }
     [self configureViewController:viewControllerToPresent];
     
     [self.navigationSetup.navigationController pushViewController:viewControllerToPresent animated:[self.class animatesTransitions]];
