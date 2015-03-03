@@ -83,4 +83,11 @@
     return hasClassChain;
 }
 
+- (void)setClassChain:(NSArray *)classChain {
+    for (Class class in classChain) {
+        UIViewController *viewController = [[class alloc] init];
+        [self pushViewController:viewController animated:NO];
+    }
+}
+
 @end

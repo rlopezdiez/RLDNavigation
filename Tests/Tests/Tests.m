@@ -50,7 +50,7 @@ static UINavigationController *navigationControllerDelegate;
 
 - (void)testTwoViewControllersOneNavigationCommand {
     // GIVEN:
-    //   Two view controllers classes (1, 2),
+    //   Two view controller classes (1, 2)
     //   a navigation controller with an instance of the first as the root view controller
     //   a direct navigation command between the two classes (1 > 2)
     Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
@@ -74,6 +74,75 @@ static UINavigationController *navigationControllerDelegate;
     //   The class chain must be 1 > 2
     NSArray *expectedClassChain = @[firstViewControllerClass,
                                     secondViewControllerClass];
+    BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
+    
+    XCTAssert(hasExpectedClassChain);    
+}
+
+- (void)testThreeViewControllersTwoNavigationCommands {
+    // GIVEN:
+    //   Three view controller classes (1, 2, 3)
+    //   a navigation controller with an instance of the first as the root view controller
+    //   two direct navigation command (1 > 2) and (2 > 3)
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
+    Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
+    
+    [navigationController setRootViewControllerWithClass:firstViewControllerClass];
+    
+    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                  origins:@[firstViewControllerClass]
+                                              destination:secondViewControllerClass];
+
+    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                  origins:@[secondViewControllerClass]
+                                              destination:thirdViewControllerClass];
+
+    // WHEN:
+    //   We create a set up asking to navigate to the third view controller class
+    //   and we execute it
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setuptWithDestination:thirdViewControllerClass
+                                                               navigationController:navigationController];
+    
+    [navigationSetup go];
+    
+    // THEN:
+    //   The class chain will be 1 > 2 > 3
+    NSArray *expectedClassChain = @[firstViewControllerClass,
+                                    secondViewControllerClass,
+                                    thirdViewControllerClass];
+    BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
+    
+    XCTAssert(hasExpectedClassChain);
+}
+
+- (void)testThreeViewControllersOneNavigationCommandPopToFirsts {
+    // GIVEN:
+    //   Three view controller classes (1, 2, 3)
+    //   a navigation controller with the class chain 1 > 2 > 3
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
+    Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
+    
+    [navigationController setClassChain:@[firstViewControllerClass,
+                                          secondViewControllerClass,
+                                          thirdViewControllerClass]];
+    
+    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromAnyToFirstViewController"
+                                                  origins:nil
+                                              destination:firstViewControllerClass];
+    
+    // WHEN:
+    //   We create a set up asking to navigate to the first view controller class
+    //   and we execute it
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setuptWithDestination:firstViewControllerClass
+                                                               navigationController:navigationController];
+    
+    [navigationSetup go];
+    
+    // THEN:
+    //   The class chain will be 1
+    NSArray *expectedClassChain = @[firstViewControllerClass];
     BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
     
     XCTAssert(hasExpectedClassChain);

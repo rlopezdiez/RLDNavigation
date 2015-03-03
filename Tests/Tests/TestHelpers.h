@@ -19,5 +19,6 @@
 
 - (void)setRootViewControllerWithClass:(Class)class;
 - (BOOL)hasClassChain:(NSArray *)classChain;
+- (void)setClassChain:(NSArray *)classChain;
 
 @end
