@@ -62,7 +62,9 @@ static NSString *const defaultnibName = @"Main";
 }
 
 - (void)popToViewController:(UIViewController *)viewControllerToReturnTo {
-    [self.navigationSetup.navigationController popToViewController:viewControllerToReturnTo animated:[self.class animatesTransitions]];
+    if (self.navigationSetup.navigationController.topViewController != viewControllerToReturnTo) {
+        [self.navigationSetup.navigationController popToViewController:viewControllerToReturnTo animated:[self.class animatesTransitions]];
+    }
 }
 
 - (void)pushNewViewController {
