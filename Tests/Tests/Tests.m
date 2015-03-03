@@ -28,6 +28,11 @@ static UINavigationController *navigationControllerDelegate;
     [self setUpViewControllerClasses];
 }
 
+- (void)tearDown {
+    [super tearDown];
+    [RLDPushPopNavigationCommand unregisterAllSubclasses];
+}
+
 - (void)setUpViewControllerClasses {
     [UIViewController registerSubclassWithName:firstViewControllerClassName];
     [UIViewController registerSubclassWithName:secondViewControllerClassName];

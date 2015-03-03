@@ -7,10 +7,12 @@
 @implementation NSObject (TestingHelpers)
 
 + (Class)registerSubclassWithName:(NSString *)name {
-    Class newClass = objc_allocateClassPair(self, [name UTF8String], 0);
-    objc_registerClassPair(newClass);
-    
-    return newClass;
+    Class class = objc_getClass([name UTF8String]);
+    if (!class) {
+        class = objc_allocateClassPair(self, [name UTF8String], 0);
+        objc_registerClassPair(class);
+    }
+    return class;
 }
 
 @end
@@ -45,6 +47,15 @@
     return imp_implementationWithBlock((id)^(id self) {
         return returnValue;
     });
+}
+
++ (void)unregisterAllSubclasses {
+    NSMutableSet *availableCommandClasses = (NSMutableSet *)[RLDDirectNavigationCommand availableCommandClasses];
+    do {
+        Class commandClass = [availableCommandClasses anyObject];
+        [availableCommandClasses removeObject:commandClass];
+        objc_disposeClassPair(commandClass);
+    } while ([availableCommandClasses count]);
 }
 
 @end

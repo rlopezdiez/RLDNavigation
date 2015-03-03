@@ -11,6 +11,7 @@
 @interface RLDPushPopNavigationCommand (TestingHelpers)
 
 + (Class)registerSubclassWithName:(NSString *)name origins:(NSArray *)origins destination:(Class)destination;
++ (void)unregisterAllSubclasses;
 
 @end
 
