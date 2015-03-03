@@ -32,7 +32,7 @@
     RLDNavigationSetup *navigationSetup = [self.navigationSetup copy];
     
     for (Class navigationCommandClass in self.navigationCommandClassChain) {
-        navigationSetup.destination = navigationCommandClass.destination;
+        navigationSetup.destination = [navigationCommandClass destination];
         
         id<RLDNavigationCommand> navigationCommand = [[navigationCommandClass alloc] initWithNavigationSetup:[navigationSetup copy]];
         [self synchronousExecutionOfAnimationBlock:^{

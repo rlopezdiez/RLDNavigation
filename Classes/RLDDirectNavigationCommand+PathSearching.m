@@ -31,7 +31,7 @@
                                     destination:nil
                                      usingBlock:^(Class navigationCommandClass, BOOL *stop) {
                                          [linksBetweenNavigationCommands setObject:parentConversionRate forKey:navigationCommandClass];
-                                         if (navigationCommandClass.destination == navigationSetup.destination) {
+                                         if ([navigationCommandClass destination] == navigationSetup.destination) {
                                              lastNavigationCommandClassInChain = navigationCommandClass;
                                              *stop = YES;
                                          } else {
@@ -78,9 +78,9 @@
     BOOL found;
     for (Class navigationCommandClass in navigationCommandClasses) {
         if (!destination) {
-            navigationSetup.destination = navigationCommandClass.destination;
+            navigationSetup.destination = [navigationCommandClass destination];
         }
-        if (([navigationCommandClass canHandleNavigationSetup:navigationSetup]) && (navigationCommandClass.destination)) {
+        if (([navigationCommandClass canHandleNavigationSetup:navigationSetup]) && ([navigationCommandClass destination])) {
             found = YES;
             block(navigationCommandClass, &shouldStop);
         }

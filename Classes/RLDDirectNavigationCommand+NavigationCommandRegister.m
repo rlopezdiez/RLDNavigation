@@ -18,7 +18,7 @@ static NSMutableSet *_availableCommandClasses;
         
         if (class != self
             && [self classConformsToNavigationCommandProtocol:class]
-            && class.destination) {
+            && [class destination]) {
             [_availableCommandClasses addObject:class];
         }
     }
