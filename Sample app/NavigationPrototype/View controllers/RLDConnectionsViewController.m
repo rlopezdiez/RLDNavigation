@@ -5,11 +5,11 @@
 @implementation RLDConnectionsViewController
 
 - (IBAction)chatWithFirstUserTapped {
-    [self navigateToChatWithUserId:@"#1"];
+    [self navigateToChatWithUserId:@"1"];
 }
 
 - (IBAction)chatWithSecondUserTapped {
-    [self navigateToChatWithUserId:@"#2"];
+    [self navigateToChatWithUserId:@"2"];
 }
 
 - (void)navigateToChatWithUserId:(NSString *)userId {

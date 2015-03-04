@@ -2,6 +2,7 @@
 
 #import "RLDNavigation.h"
 #import "RLDContactCardViewModel.h"
+#import "RLDNavigationSetup+URLs.h"
 
 @implementation RLDMenuViewController
 
@@ -17,21 +18,20 @@
 
 - (IBAction)chatTapped {
     [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDChatViewController")
-                                   properties:@{@"userId" : @"#1"}
-                         navigationController:self.navigationController] go];
-}
-
-- (IBAction)profileTapped {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDProfileViewController")
-                                   properties:@{@"userId" : @"#2"}
+                                   properties:@{@"userId" : @"1"}
                          navigationController:self.navigationController] go];
 }
 
 - (IBAction)chatFromProfileTapped:(id)sender {
     [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDChatViewController")
-                                   properties:@{@"userId" : @"#1"}
+                                   properties:@{@"userId" : @"1"}
                                   breadcrumbs: @[NSClassFromString(@"RLDProfileViewController")]
                          navigationController:self.navigationController] go];
+}
+
+- (IBAction)profileTapped {
+    [[RLDNavigationSetup setupWithUrl:@"folder/profile?userId=2"
+                 navigationController:self.navigationController] go];
 }
 
 - (IBAction)contactCardTapped {

@@ -5,11 +5,11 @@
 @implementation RLDFolderViewController
 
 - (IBAction)chatWithFirstUserTapped {
-    [self navigateToProfileWithUserId:@"#1"];
+    [self navigateToProfileWithUserId:@"1"];
 }
 
 - (IBAction)chatWithSecondUserTapped {
-    [self navigateToProfileWithUserId:@"#2"];
+    [self navigateToProfileWithUserId:@"2"];
 }
 
 - (void)navigateToProfileWithUserId:(NSString *)userId {
