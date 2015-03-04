@@ -5,7 +5,7 @@ static NSString *const destinationClassName = @"RLDConnectionsViewController";
 
 @implementation RLDConnectionsNavigationCommand
 
-#pragma mark - Idoneity checking
+#pragma mark - Suitability checking
 
 + (NSArray *)origins {
     return @[NSClassFromString(originClassName)];

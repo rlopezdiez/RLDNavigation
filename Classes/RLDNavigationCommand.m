@@ -24,7 +24,7 @@
     }
 }
 
-#pragma mark - Idoneity checking
+#pragma mark - Suitability checking
 
 + (BOOL)canHandleNavigationSetup:(RLDNavigationSetup *)navigationSetup {
     return (navigationSetup.origin && navigationSetup.destination);

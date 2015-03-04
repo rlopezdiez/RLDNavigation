@@ -4,7 +4,7 @@ static NSString *const destinationClassName = @"RLDMenuViewController";
 
 @implementation RLDMenuNavigationCommand
 
-#pragma mark - Idoneity checking
+#pragma mark - Suitability checking
 
 + (Class)destination {
     return NSClassFromString(destinationClassName);

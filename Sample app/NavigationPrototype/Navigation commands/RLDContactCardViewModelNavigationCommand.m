@@ -5,7 +5,7 @@ static NSString *const destinationClassName = @"RLDContactCardViewController";
 
 @implementation RLDContactCardViewModelNavigationCommand
 
-#pragma mark - Idoneity checking
+#pragma mark - Suitability checking
 
 + (BOOL)canHandleNavigationSetup:(RLDNavigationSetup *)navigationSetup {
     RLDContactCardViewModel *viewModel = navigationSetup.properties[@"viewModel"];

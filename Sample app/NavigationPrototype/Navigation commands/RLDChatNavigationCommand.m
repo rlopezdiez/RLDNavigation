@@ -11,14 +11,14 @@ static NSString *const destinationClassName = @"RLDChatViewController";
 
 @implementation RLDChatNavigationCommand
 
-#pragma mark - Idoneity checking
+#pragma mark - Suitability checking
 
 + (BOOL)canHandleNavigationSetup:(RLDNavigationSetup *)navigationSetup {
     BOOL canHandleNavigationSetup = [super canHandleNavigationSetup:navigationSetup];
     
     if (canHandleNavigationSetup) {
-        UIViewController * topViewController =navigationSetup.navigationController.topViewController;
-        if (topViewController.class == NSClassFromString(originClassNameProfile)) {
+        UIViewController * topViewController = navigationSetup.navigationController.topViewController;
+        if (topViewController.class == [RLDProfileViewController class]) {
             NSString *userId = navigationSetup.properties[@"userId"] ? navigationSetup.properties[@"userId"] : nil;
             canHandleNavigationSetup = [[(RLDProfileViewController *)topViewController userId] isEqualToString:userId];
         }

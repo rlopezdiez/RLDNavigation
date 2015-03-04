@@ -9,7 +9,7 @@ static NSString *const defaultnibName = @"Main";
 
 @implementation RLDPushPopNavigationCommand
 
-#pragma mark - Idoneity checking
+#pragma mark - Suitability checking
 
 + (BOOL)canHandleNavigationSetup:(RLDNavigationSetup *)navigationSetup {
     BOOL isDestinationValid = ([navigationSetup.destination isSubclassOfClass:self.destination]);
