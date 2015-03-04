@@ -1,4 +1,4 @@
-# RLDNavigation
+# RLDNavigation [![Build Status](https://travis-ci.org/rlopezdiez/RLDNavigation.svg?branch=master)](https://travis-ci.org/rlopezdiez/RLDNavigation)
 
 If you want to adhere to the single responsibility principle of object-oriented programming, your view controllers shouldn't be taking care of the navigation flow of your app.
 
