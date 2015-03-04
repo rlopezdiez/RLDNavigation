@@ -4,6 +4,7 @@
 
 #import "RLDBreadcrumbNavigationCommand.h"
 #import "RLDDirectNavigationCommand.h"
+#import "UINavigationController+RLDNavigationSetup.h"
 
 @implementation RLDNavigationCommand
 
@@ -12,6 +13,10 @@
 #pragma mark - Factory method
 
 + (instancetype)navigationCommandWithNavigationSetup:(RLDNavigationSetup *)navigationSetup {
+    // We check if we are already at the destination
+    UIViewController *viewControllerToReturnTo = [navigationSetup.navigationController viewControllerForNavigationSetup:navigationSetup];
+    if (viewControllerToReturnTo == navigationSetup.navigationController.topViewController) return nil;
+
     if ([navigationSetup.breadcrumbs count] > 0) {
         return [[RLDBreadcrumbNavigationCommand alloc] initWithNavigationSetup:navigationSetup];
     } else {
