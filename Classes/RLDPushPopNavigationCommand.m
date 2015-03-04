@@ -15,10 +15,9 @@ static NSString *const defaultnibName = @"Main";
     BOOL isDestinationValid = ([navigationSetup.destination isSubclassOfClass:self.destination]);
     if (!isDestinationValid) return NO;
     
-    BOOL canPushToDestination = [self isOriginClassValid:navigationSetup.origin];
-    
     BOOL canPopToDestinationInNavigationSetup = ([navigationSetup.navigationController viewControllerForNavigationSetup:navigationSetup] != nil);
-    
+    BOOL canPushToDestination = canPopToDestinationInNavigationSetup ?: [self isOriginClassValid:navigationSetup.origin];
+   
     return (canPopToDestinationInNavigationSetup || canPushToDestination);
 }
 
