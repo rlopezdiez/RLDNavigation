@@ -23,13 +23,13 @@
 }
 
 - (IBAction)jumpToConnectionsTapped {
-    [[RLDNavigationSetup setuptWithDestination:NSClassFromString(@"RLDConnectionsViewController")
-                          navigationController:self.navigationController] go];
+    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDConnectionsViewController")
+                         navigationController:self.navigationController] go];
 }
 
 - (IBAction)jumpToMenuTapped {
-    [[RLDNavigationSetup setuptWithDestination:NSClassFromString(@"RLDMenuViewController")
-                          navigationController:self.navigationController] go];
+    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDMenuViewController")
+                         navigationController:self.navigationController] go];
 }
 
 - (IBAction)jumpToProfileForSecondUserTapped {

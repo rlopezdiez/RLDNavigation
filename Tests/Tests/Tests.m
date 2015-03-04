@@ -57,14 +57,14 @@ static RLDCountingNavigationController *navigationController;
     [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
                                                   origins:@[firstViewControllerClass]
                                               destination:secondViewControllerClass];
-
+    
     [navigationController setRootViewControllerWithClass:firstViewControllerClass];
     
     // WHEN:
     //   We create a set up asking to navigate to the 2nd view controller class
     //   and we execute it
-    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setuptWithDestination:secondViewControllerClass
-                                                               navigationController:navigationController];
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:secondViewControllerClass
+                                                              navigationController:navigationController];
     
     [navigationSetup go];
     
@@ -104,8 +104,8 @@ static RLDCountingNavigationController *navigationController;
     // WHEN:
     //   We create a set up asking to navigate to the 2nd view controller class
     //   and we execute it
-    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setuptWithDestination:secondViewControllerClass
-                                                               navigationController:navigationController];
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:secondViewControllerClass
+                                                              navigationController:navigationController];
     
     [navigationSetup go];
     
@@ -139,24 +139,24 @@ static RLDCountingNavigationController *navigationController;
     [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
                                                   origins:@[firstViewControllerClass]
                                               destination:secondViewControllerClass];
-
+    
     [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
                                                   origins:@[secondViewControllerClass]
                                               destination:thirdViewControllerClass];
-
+    
     [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFourthViewController"
                                                   origins:@[thirdViewControllerClass]
                                               destination:fourthViewControllerClass];
-
+    
     [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFourToFifthViewController"
                                                   origins:@[fourthViewControllerClass]
                                               destination:fifthViewControllerClass];
-
+    
     // WHEN:
     //   We create a set up asking to navigate to the 5th view controller class
     //   and we execute it
-    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setuptWithDestination:fifthViewControllerClass
-                                                               navigationController:navigationController];
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:fifthViewControllerClass
+                                                              navigationController:navigationController];
     
     [navigationSetup go];
     
@@ -209,8 +209,8 @@ static RLDCountingNavigationController *navigationController;
     // WHEN:
     //   We create a set up asking to navigate to the 4th view controller class
     //   and we execute it
-    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setuptWithDestination:fourthViewControllerClass
-                                                               navigationController:navigationController];
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:fourthViewControllerClass
+                                                              navigationController:navigationController];
     
     [navigationSetup go];
     
@@ -240,7 +240,7 @@ static RLDCountingNavigationController *navigationController;
     Class fifthViewControllerClass = NSClassFromString(fifthViewControllerClassName);
     
     [navigationController setRootViewControllerWithClass:firstViewControllerClass];
-
+    
     [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
                                                   origins:@[firstViewControllerClass]
                                               destination:secondViewControllerClass];
@@ -252,24 +252,24 @@ static RLDCountingNavigationController *navigationController;
     [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFourthViewController"
                                                   origins:@[thirdViewControllerClass]
                                               destination:fourthViewControllerClass];
-
+    
     [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFourToFifthViewController"
                                                   origins:@[fourthViewControllerClass]
                                               destination:fifthViewControllerClass];
-
+    
     [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFistToThirdViewController"
                                                   origins:@[firstViewControllerClass]
                                               destination:thirdViewControllerClass];
-
+    
     [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFifthViewController"
                                                   origins:@[thirdViewControllerClass]
                                               destination:fifthViewControllerClass];
-   
+    
     // WHEN:
     //   We create a set up asking to navigate to the 5th view controller class
     //   and we execute it
-    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setuptWithDestination:fifthViewControllerClass
-                                                               navigationController:navigationController];
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:fifthViewControllerClass
+                                                              navigationController:navigationController];
     
     [navigationSetup go];
     
@@ -327,9 +327,9 @@ static RLDCountingNavigationController *navigationController;
     //   We create a set up asking to navigate to the fifth view controller class
     //   passing by the second and fourth view controllers classes
     //   and we execute it
-    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setuptWithDestination:fifthViewControllerClass
-                                                                        breadcrumbs:@[secondViewControllerClass, fourthViewControllerClass]
-                                                               navigationController:navigationController];
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:fifthViewControllerClass
+                                                                       breadcrumbs:@[secondViewControllerClass, fourthViewControllerClass]
+                                                              navigationController:navigationController];
     
     [navigationSetup go];
     
@@ -371,8 +371,8 @@ static RLDCountingNavigationController *navigationController;
     // WHEN:
     //   We create a set up asking to navigate to the third view controller class
     //   and we execute it
-    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setuptWithDestination:thirdViewControllerClass
-                                                               navigationController:navigationController];
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
+                                                              navigationController:navigationController];
     
     [navigationSetup go];
     

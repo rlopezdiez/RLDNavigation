@@ -38,8 +38,8 @@ Once you have all the navigation commands that you need, you will be able to eas
 Class classOfDestinationViewController = NSClassFromString(@"ViewControllerClass");
 UINavigationController *navigationController = self.navigationController;
 
-[[RLDNavigationSetup setuptWithDestination:classOfDestinationViewController
-                      navigationController:navigationController] go];
+[[RLDNavigationSetup setupWithDestination:classOfDestinationViewController
+                     navigationController:navigationController] go];
 
 ```
 
@@ -50,9 +50,9 @@ If you need to pass parameters or customize the view controllers when navigating
 For instance, if three view controllers are pushed when navigating in this example, all of them will get its `userName` property set to `John Doe`. In case any of the view controllers doesn't have this property, or it's readonly, it will be ignored:
 
 ```objectivec
-[[RLDNavigationSetup setuptWithDestination:classOfDestinationViewController
-                                properties:@{@"userName" : @"John Doe"}
-                      navigationController:navigationController] go];
+[[RLDNavigationSetup setupWithDestination:classOfDestinationViewController
+                               properties:@{@"userName" : @"John Doe"}
+                     navigationController:navigationController] go];
 ```
 
 #### Breadcrumbs
@@ -60,13 +60,28 @@ For instance, if three view controllers are pushed when navigating in this examp
 You can override the fully automatic flow calculation by specifying intermediate destinations that must be reached before aiming to the final target. Automated paths will be followed between these milestones when necessary.
 
 ```objectivec
-[[RLDNavigationSetup setuptWithDestination:classOfDestinationViewController
-                                properties:@{@"userName" : @"John Doe"}
-                               breadcrumbs:@(firstIntermediateClass, secondIntermediateClass)
-                      navigationController:navigationController] go];
+[[RLDNavigationSetup setupWithDestination:classOfDestinationViewController
+                               properties:@{@"userName" : @"John Doe"}
+                              breadcrumbs:@(firstIntermediateClass, secondIntermediateClass)
+                     navigationController:navigationController] go];
 ```
 
 Breadcrumbs can help you creating complex routes, and are also a helpful way to replace URL-like navigation definitions.
+
+#### View models
+
+Instead of exposing your view controller classes, you should consider using view models, which is a cleaner, more flexible and strongly typed way to pass configuration parameters around. This will require a little more effort from your side if your application is not architected to work that way, but will probably pay off in the short term. You can find how to use view models with `RLDNavigation` in the included sample app:
+```objectivec
+// RLDMenuViewController
+- (IBAction)contactCardTapped {
+    RLDContactCardViewModel *viewModel = [RLDContactCardViewModel viewModelWithName:@"John"
+                                                                            surname:@"Doe"
+                                                                              email:@"john.doe@example.com"];
+    [[RLDNavigationSetup setupWithViewModel:viewModel
+                       navigationController:self.navigationController] go];
+}
+```
+
 
 ## Installing
 

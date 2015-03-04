@@ -1,49 +1,45 @@
 #import "RLDMenuViewController.h"
 
 #import "RLDNavigation.h"
+#import "RLDContactCardViewModel.h"
 
 @implementation RLDMenuViewController
 
 - (IBAction)peopleNearbyTapped {
-    [self navigateTo:@"RLDFolderViewController"];
+    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDFolderViewController")
+                         navigationController:self.navigationController] go];
 }
 
 - (IBAction)connectionsTapped {
-    [self navigateTo:@"RLDConnectionsViewController"];
+    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDConnectionsViewController")
+                         navigationController:self.navigationController] go];
 }
 
 - (IBAction)chatTapped {
-    [self navigateTo:@"RLDChatViewController" userId:@"#1"];
+    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDChatViewController")
+                                   properties:@{@"userId" : @"#1"}
+                         navigationController:self.navigationController] go];
 }
 
 - (IBAction)profileTapped {
-    [self navigateTo:@"RLDProfileViewController" userId:@"#2"];
+    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDProfileViewController")
+                                   properties:@{@"userId" : @"#2"}
+                         navigationController:self.navigationController] go];
 }
 
 - (IBAction)chatFromProfileTapped:(id)sender {
-    [self navigateTo:@"RLDChatViewController" userId:@"#1" passingBy:@"RLDProfileViewController"];
-}
-
-#pragma mark - Helper methods for navigation
-
-- (void)navigateTo:(NSString *)string {
-    [self navigateTo:string userId:nil passingBy:nil];
-}
-
-- (void)navigateTo:(NSString *)string userId:(NSString *)userId {
-    [self navigateTo:string userId:userId passingBy:nil];
-}
-
-- (void)navigateTo:(NSString *)destinationClassName
-            userId:(NSString *)userId
-         passingBy:(NSString *)passingBy {
-    NSDictionary *properties = (userId ? @{@"userId" : userId} : nil);
-    NSArray *breadcrumbs = (passingBy ? @[NSClassFromString(passingBy)] : nil);
-
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(destinationClassName)
-                                   properties:properties
-                                  breadcrumbs:breadcrumbs
+    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDChatViewController")
+                                   properties:@{@"userId" : @"#1"}
+                                  breadcrumbs: @[NSClassFromString(@"RLDProfileViewController")]
                          navigationController:self.navigationController] go];
+}
+
+- (IBAction)contactCardTapped {
+    RLDContactCardViewModel *viewModel = [RLDContactCardViewModel viewModelWithName:@"John"
+                                                                            surname:@"Doe"
+                                                                              email:@"john.doe@example.com"];
+    [[RLDNavigationSetup setupWithViewModel:viewModel
+                       navigationController:self.navigationController] go];
 }
 
 @end

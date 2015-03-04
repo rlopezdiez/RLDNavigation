@@ -4,17 +4,17 @@
 
 #pragma mark - Factory method and initialization
 
-+ (instancetype)setuptWithDestination:(Class)destination
-                 navigationController:(UINavigationController *)navigationController {
++ (instancetype)setupWithDestination:(Class)destination
+                navigationController:(UINavigationController *)navigationController {
     return [self setupWithDestination:destination
                            properties:nil
                           breadcrumbs:nil
                  navigationController:navigationController];
 }
 
-+ (instancetype)setuptWithDestination:(Class)destination
-                          breadcrumbs:(NSArray *)breadcrumbs
-                 navigationController:(UINavigationController *)navigationController {
++ (instancetype)setupWithDestination:(Class)destination
+                         breadcrumbs:(NSArray *)breadcrumbs
+                navigationController:(UINavigationController *)navigationController {
     return [self setupWithDestination:destination
                            properties:nil
                           breadcrumbs:breadcrumbs

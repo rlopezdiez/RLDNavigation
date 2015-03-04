@@ -9,12 +9,12 @@
 
 @property (nonatomic, strong, readonly) UINavigationController *navigationController;
 
-+ (instancetype)setuptWithDestination:(Class)destination
-                 navigationController:(UINavigationController *)navigationController;
++ (instancetype)setupWithDestination:(Class)destination
+                navigationController:(UINavigationController *)navigationController;
 
-+ (instancetype)setuptWithDestination:(Class)destination
-                          breadcrumbs:(NSArray *)breadcrumbs
-                 navigationController:(UINavigationController *)navigationController;
++ (instancetype)setupWithDestination:(Class)destination
+                         breadcrumbs:(NSArray *)breadcrumbs
+                navigationController:(UINavigationController *)navigationController;
 
 + (instancetype)setupWithDestination:(Class)destination
                           properties:(NSDictionary *)properties

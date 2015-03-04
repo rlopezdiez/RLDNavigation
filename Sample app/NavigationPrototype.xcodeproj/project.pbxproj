@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		45144EE91AA3D9E000752BCB /* NSObject+PropertyChecking.m in Sources */ = {isa = PBXBuildFile; fileRef = 45144EE81AA3D9E000752BCB /* NSObject+PropertyChecking.m */; };
+		455AC0121AA68A7E00B801BD /* RLDContactCardViewModelNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 455AC0111AA68A7E00B801BD /* RLDContactCardViewModelNavigationCommand.m */; };
+		455AC0151AA68AB500B801BD /* RLDContactCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 455AC0141AA68AB500B801BD /* RLDContactCardViewController.m */; };
+		455AC0181AA68C0500B801BD /* RLDContactCardViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 455AC0171AA68C0500B801BD /* RLDContactCardViewModel.m */; };
 		458B52A81A9F32A900E2E7D0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 458B52A71A9F32A900E2E7D0 /* main.m */; };
 		458B52AB1A9F32A900E2E7D0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 458B52AA1A9F32A900E2E7D0 /* AppDelegate.m */; };
 		458B52B11A9F32A900E2E7D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 458B52AF1A9F32A900E2E7D0 /* Main.storyboard */; };
@@ -37,6 +40,12 @@
 /* Begin PBXFileReference section */
 		45144EE71AA3D9E000752BCB /* NSObject+PropertyChecking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PropertyChecking.h"; sourceTree = "<group>"; };
 		45144EE81AA3D9E000752BCB /* NSObject+PropertyChecking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PropertyChecking.m"; sourceTree = "<group>"; };
+		455AC0101AA68A7E00B801BD /* RLDContactCardViewModelNavigationCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLDContactCardViewModelNavigationCommand.h; sourceTree = "<group>"; };
+		455AC0111AA68A7E00B801BD /* RLDContactCardViewModelNavigationCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLDContactCardViewModelNavigationCommand.m; sourceTree = "<group>"; };
+		455AC0131AA68AB500B801BD /* RLDContactCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RLDContactCardViewController.h; path = "View controllers/RLDContactCardViewController.h"; sourceTree = "<group>"; };
+		455AC0141AA68AB500B801BD /* RLDContactCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RLDContactCardViewController.m; path = "View controllers/RLDContactCardViewController.m"; sourceTree = "<group>"; };
+		455AC0161AA68C0500B801BD /* RLDContactCardViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RLDContactCardViewModel.h; path = "View controllers/RLDContactCardViewModel.h"; sourceTree = "<group>"; };
+		455AC0171AA68C0500B801BD /* RLDContactCardViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RLDContactCardViewModel.m; path = "View controllers/RLDContactCardViewModel.m"; sourceTree = "<group>"; };
 		458B52A21A9F32A900E2E7D0 /* NavigationPrototype.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationPrototype.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		458B52A61A9F32A900E2E7D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		458B52A71A9F32A900E2E7D0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -151,6 +160,10 @@
 				458B52D01A9F38C400E2E7D0 /* RLDChatViewController.m */,
 				458B52D71A9F38C400E2E7D0 /* RLDProfileViewController.h */,
 				458B52D81A9F38C400E2E7D0 /* RLDProfileViewController.m */,
+				455AC0131AA68AB500B801BD /* RLDContactCardViewController.h */,
+				455AC0141AA68AB500B801BD /* RLDContactCardViewController.m */,
+				455AC0161AA68C0500B801BD /* RLDContactCardViewModel.h */,
+				455AC0171AA68C0500B801BD /* RLDContactCardViewModel.m */,
 			);
 			name = "View controllers";
 			sourceTree = "<group>";
@@ -197,6 +210,8 @@
 				45CF6DE51AA0395800E76F62 /* RLDProfileNavigationCommand.m */,
 				45CF6DDC1AA0395800E76F62 /* RLDChatNavigationCommand.h */,
 				45CF6DDD1AA0395800E76F62 /* RLDChatNavigationCommand.m */,
+				455AC0101AA68A7E00B801BD /* RLDContactCardViewModelNavigationCommand.h */,
+				455AC0111AA68A7E00B801BD /* RLDContactCardViewModelNavigationCommand.m */,
 			);
 			path = "Navigation commands";
 			sourceTree = "<group>";
@@ -279,6 +294,8 @@
 				458B52A81A9F32A900E2E7D0 /* main.m in Sources */,
 				45CF6DEC1AA0395800E76F62 /* RLDProfileNavigationCommand.m in Sources */,
 				45B1C71B1AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.m in Sources */,
+				455AC0151AA68AB500B801BD /* RLDContactCardViewController.m in Sources */,
+				455AC0181AA68C0500B801BD /* RLDContactCardViewModel.m in Sources */,
 				45B1C7241AA2860200B50484 /* RLDBreadcrumbNavigationCommand.m in Sources */,
 				45144EE91AA3D9E000752BCB /* NSObject+PropertyChecking.m in Sources */,
 				458B52DA1A9F38C400E2E7D0 /* RLDConnectionsViewController.m in Sources */,
@@ -291,6 +308,7 @@
 				4593F82B1AA22074000B8038 /* RLDMenuNavigationCommand.m in Sources */,
 				45B1C7211AA2853800B50484 /* RLDDirectNavigationCommand.m in Sources */,
 				45A60E861AA22E63004FB8F4 /* RLDNavigationCommand.m in Sources */,
+				455AC0121AA68A7E00B801BD /* RLDContactCardViewModelNavigationCommand.m in Sources */,
 				45CF6DE91AA0395800E76F62 /* RLDConnectionsNavigationCommand.m in Sources */,
 				458B52DD1A9F38C400E2E7D0 /* RLDProfileViewController.m in Sources */,
 			);
