@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-#import "RLDNavigationSetup.h"
+#import "RLDNavigationSetup+RLDContactCardViewModel.h"
 
 @interface RLDContactCardViewModel : NSObject
 
@@ -11,12 +11,5 @@
 + (instancetype)viewModelWithName:(NSString *)name
                           surname:(NSString *)surname
                             email:(NSString *)email;
-
-@end
-
-@interface RLDNavigationSetup (RLDContactCardViewModelNavigationCommand)
-
-+ (instancetype)setupWithViewModel:(RLDContactCardViewModel *)viewModel
-              navigationController:(UINavigationController *)navigationController;
 
 @end

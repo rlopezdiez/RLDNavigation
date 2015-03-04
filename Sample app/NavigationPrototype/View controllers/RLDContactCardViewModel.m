@@ -1,7 +1,5 @@
 #import "RLDContactCardViewModel.h"
 
-static NSString *const destinationClassName = @"RLDContactCardViewController";
-
 @implementation RLDContactCardViewModel
 
 + (instancetype)viewModelWithName:(NSString *)name
@@ -14,20 +12,6 @@ static NSString *const destinationClassName = @"RLDContactCardViewController";
         viewModel.email = email;
     }
     return viewModel;
-}
-
-@end
-
-@implementation RLDNavigationSetup (RLDContactCardViewModelNavigationCommand)
-
-+ (instancetype)setupWithViewModel:(RLDContactCardViewModel *)viewModel
-              navigationController:(UINavigationController *)navigationController {
-    if (![viewModel isKindOfClass:[RLDContactCardViewModel class]]) return nil;
-    
-    return [self setupWithDestination:NSClassFromString(destinationClassName)
-                           properties:@{@"viewModel" : viewModel}
-                 navigationController:navigationController];
-    
 }
 
 @end

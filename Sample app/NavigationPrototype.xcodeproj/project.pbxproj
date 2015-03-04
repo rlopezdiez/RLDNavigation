@@ -27,6 +27,7 @@
 		45A60E881AA22E63004FB8F4 /* RLDNavigationSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A60E811AA22E63004FB8F4 /* RLDNavigationSetup.m */; };
 		45A60E891AA22E63004FB8F4 /* RLDPushPopNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A60E831AA22E63004FB8F4 /* RLDPushPopNavigationCommand.m */; };
 		45A60E8A1AA22E63004FB8F4 /* UINavigationController+RLDNavigationSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A60E851AA22E63004FB8F4 /* UINavigationController+RLDNavigationSetup.m */; };
+		45A80FAA1AA79A1C00F19112 /* RLDNavigationSetup+RLDContactCardViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A80FA91AA79A1C00F19112 /* RLDNavigationSetup+RLDContactCardViewModel.m */; };
 		45B1C7181AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B1C7171AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.m */; };
 		45B1C71B1AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B1C71A1AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.m */; };
 		45B1C7211AA2853800B50484 /* RLDDirectNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B1C7201AA2853800B50484 /* RLDDirectNavigationCommand.m */; };
@@ -77,6 +78,8 @@
 		45A60E831AA22E63004FB8F4 /* RLDPushPopNavigationCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLDPushPopNavigationCommand.m; sourceTree = "<group>"; };
 		45A60E841AA22E63004FB8F4 /* UINavigationController+RLDNavigationSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+RLDNavigationSetup.h"; sourceTree = "<group>"; };
 		45A60E851AA22E63004FB8F4 /* UINavigationController+RLDNavigationSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+RLDNavigationSetup.m"; sourceTree = "<group>"; };
+		45A80FA81AA79A1C00F19112 /* RLDNavigationSetup+RLDContactCardViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLDNavigationSetup+RLDContactCardViewModel.h"; sourceTree = "<group>"; };
+		45A80FA91AA79A1C00F19112 /* RLDNavigationSetup+RLDContactCardViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLDNavigationSetup+RLDContactCardViewModel.m"; sourceTree = "<group>"; };
 		45B1C7161AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLDDirectNavigationCommand+PathSearching.h"; sourceTree = "<group>"; };
 		45B1C7171AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLDDirectNavigationCommand+PathSearching.m"; sourceTree = "<group>"; };
 		45B1C7191AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLDDirectNavigationCommand+NavigationCommandRegister.h"; sourceTree = "<group>"; };
@@ -126,6 +129,7 @@
 		458B52A41A9F32A900E2E7D0 /* NavigationPrototype */ = {
 			isa = PBXGroup;
 			children = (
+				45A80FA71AA79A1C00F19112 /* Navigation setup */,
 				45CF6DDB1AA0395800E76F62 /* Navigation commands */,
 				458B52CB1A9F367600E2E7D0 /* View controllers */,
 				458B52A51A9F32A900E2E7D0 /* Supporting Files */,
@@ -195,6 +199,15 @@
 			);
 			name = RLDNavigation;
 			path = ../Classes;
+			sourceTree = "<group>";
+		};
+		45A80FA71AA79A1C00F19112 /* Navigation setup */ = {
+			isa = PBXGroup;
+			children = (
+				45A80FA81AA79A1C00F19112 /* RLDNavigationSetup+RLDContactCardViewModel.h */,
+				45A80FA91AA79A1C00F19112 /* RLDNavigationSetup+RLDContactCardViewModel.m */,
+			);
+			path = "Navigation setup";
 			sourceTree = "<group>";
 		};
 		45CF6DDB1AA0395800E76F62 /* Navigation commands */ = {
@@ -305,6 +318,7 @@
 				45A60E871AA22E63004FB8F4 /* RLDNavigationSetup+RLDNavigationCommand.m in Sources */,
 				45CF6DEB1AA0395800E76F62 /* RLDFolderNavigationCommand.m in Sources */,
 				458B52D91A9F38C400E2E7D0 /* RLDChatViewController.m in Sources */,
+				45A80FAA1AA79A1C00F19112 /* RLDNavigationSetup+RLDContactCardViewModel.m in Sources */,
 				4593F82B1AA22074000B8038 /* RLDMenuNavigationCommand.m in Sources */,
 				45B1C7211AA2853800B50484 /* RLDDirectNavigationCommand.m in Sources */,
 				45A60E861AA22E63004FB8F4 /* RLDNavigationCommand.m in Sources */,
