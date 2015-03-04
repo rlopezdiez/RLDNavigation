@@ -70,7 +70,7 @@ Breadcrumbs can help you creating complex routes, and are also a helpful way to 
 
 #### View models
 
-Instead of exposing your view controller classes, you should consider using view models, which is a cleaner, more flexible and strongly typed way to pass configuration parameters around. This will require a little more effort from your side if your application is not architected to work that way, but will probably pay off in the short term. You can find how to use view models with `RLDNavigation` in the included sample app:
+Instead of exposing your view controller classes, you should consider using view models, which is a cleaner, more flexible and strongly typed way to pass configuration parameters around. This will require a little more effort from your side if your application is not architected to work that way, but will probably pay off in the long term. You can find how to use view models with `RLDNavigation` in the included sample app:
 ```objectivec
 // RLDMenuViewController
 - (IBAction)contactCardTapped {
@@ -82,6 +82,16 @@ Instead of exposing your view controller classes, you should consider using view
 }
 ```
 
+#### URL navigation
+
+In the unlikely event that you want to use an URL-like navigation scheme, you can easily implement it with `RLDNavigation`. Just create a category on `RLDNavigationSetup` and implement a factory method to convert the URL components into breadcrumbs, and the final query into properties. You can find an basic example of how to do this in the included app:
+
+```objectivec
+// RLDMenuViewController
+- (IBAction)profileTapped {
+    [[RLDNavigationSetup setupWithUrl:@"folder/profile?userId=2" navigationController:self.navigationController] go];
+}
+```
 
 ## Installing
 
