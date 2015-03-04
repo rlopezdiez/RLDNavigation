@@ -388,4 +388,51 @@ static RLDCountingNavigationController *navigationController;
     XCTAssertEqual(navigationController.popCount, 0);
 }
 
+- (void)testBreadcrumbNavigationConservation {
+    // GIVEN:
+    //   Three view controller classes (1, 2, 3)
+    //   a navigation controller with the class chain 1 > 2 > 3
+    //   three navigation commands (*, 1), (1 > 2), (2 > 3)
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
+    Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
+    
+    [navigationController setClassChain:@[firstViewControllerClass,
+                                          secondViewControllerClass,
+                                          thirdViewControllerClass]];
+    
+    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandToFirstViewController"
+                                                  origins:@[]
+                                              destination:secondViewControllerClass];
+    
+    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                  origins:@[firstViewControllerClass]
+                                              destination:secondViewControllerClass];
+    
+    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                  origins:@[secondViewControllerClass]
+                                              destination:thirdViewControllerClass];
+    
+    // WHEN:
+    //   We create a set up asking to navigate to the third view controller class
+    //   and we execute it
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
+                                                                       breadcrumbs:@[secondViewControllerClass]
+                                                              navigationController:navigationController];
+    
+    [navigationSetup go];
+    
+    // THEN:
+    //   The class chain will be 1 > 2 > 3
+    //   The navigation controller hasn't pushed nor popped
+    NSArray *expectedClassChain = @[firstViewControllerClass,
+                                    secondViewControllerClass,
+                                    thirdViewControllerClass];
+    BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
+    
+    XCTAssert(hasExpectedClassChain);
+    XCTAssertEqual(navigationController.pushCount, 0);
+    XCTAssertEqual(navigationController.popCount, 0);
+}
+
 @end
