@@ -149,7 +149,6 @@
 				TargetAttributes = {
 					452B76541AA4DF9600B321BC = {
 						CreatedOnToolsVersion = 6.1;
-						TestTargetID = 452B763B1AA4DF9600B321BC;
 					};
 				};
 			};
@@ -284,7 +283,6 @@
 		452B76631AA4DF9600B321BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -296,14 +294,12 @@
 				INFOPLIST_FILE = Tests/info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "";
 			};
 			name = Debug;
 		};
 		452B76641AA4DF9600B321BC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -311,7 +307,6 @@
 				INFOPLIST_FILE = Tests/info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "";
 			};
 			name = Release;
 		};
