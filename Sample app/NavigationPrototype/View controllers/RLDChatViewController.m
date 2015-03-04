@@ -22,4 +22,18 @@
                          navigationController:self.navigationController] go];
 }
 
+- (IBAction)jumpToProfileForSecondUserTapped {
+    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDProfileViewController")
+                                   properties: @{@"userId" : @"#2"}
+                                  breadcrumbs:@[NSClassFromString(@"RLDChatViewController")]
+                         navigationController:self.navigationController] go];
+}
+
+- (IBAction)jumpToChatWithSecondUserTapped {
+    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDChatViewController")
+                                   properties: @{@"userId" : @"#2"}
+                                  breadcrumbs:@[NSClassFromString(@"RLDConnectionsViewController")]
+                         navigationController:self.navigationController] go];
+}
+
 @end
