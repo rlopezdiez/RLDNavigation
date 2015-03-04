@@ -23,14 +23,14 @@
     __block Class lastNavigationCommandClassInChain = nil;
     while (nextNavigationCommandClasses.count) {
         
-        Class parentConversionRate = [nextNavigationCommandClasses firstObject];
-        [nextNavigationCommandClasses removeObject:parentConversionRate];
+        Class parentClass = [nextNavigationCommandClasses firstObject];
+        [nextNavigationCommandClasses removeObject:parentClass];
         
         [self enumerateNavigationCommandClasses:availableCommandsClasses
-                                     withOrigin:parentConversionRate.destination
+                                     withOrigin:parentClass.destination
                                     destination:nil
                                      usingBlock:^(Class navigationCommandClass, BOOL *stop) {
-                                         [linksBetweenNavigationCommands setObject:parentConversionRate forKey:navigationCommandClass];
+                                         [linksBetweenNavigationCommands setObject:parentClass forKey:navigationCommandClass];
                                          if ([navigationCommandClass destination] == navigationSetup.destination) {
                                              lastNavigationCommandClassInChain = navigationCommandClass;
                                              *stop = YES;
