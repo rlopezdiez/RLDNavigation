@@ -29,7 +29,7 @@ static RLDCountingNavigationController *navigationController;
 
 - (void)tearDown {
     [super tearDown];
-    [RLDPushPopNavigationCommand unregisterAllSubclasses];
+    [RLDTestingNavigationCommand clearExecutionRegistryAndUnregisterAllSubclasses];
 }
 
 - (void)setUpViewControllerClasses {
@@ -54,9 +54,9 @@ static RLDCountingNavigationController *navigationController;
     Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
     Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
-                                                  origins:@[firstViewControllerClass]
-                                              destination:secondViewControllerClass];
+    Class navigationCommandClass = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
     
     [navigationController setRootViewControllerWithClass:firstViewControllerClass];
     
@@ -70,21 +70,22 @@ static RLDCountingNavigationController *navigationController;
     
     // THEN:
     //   The class chain must be 1 > 2
-    //   The navigation controller has pushed once, without any pop
+    //   the navigation controller has pushed once, without any pop
+    //   the navigation command has been executed
     NSArray *expectedClassChain = @[firstViewControllerClass,
                                     secondViewControllerClass];
-    BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
     
-    XCTAssert(hasExpectedClassChain);
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
     XCTAssertEqual(navigationController.pushCount, 1);
     XCTAssertEqual(navigationController.popCount, 0);
+    XCTAssertTrue([navigationCommandClass executed]);
 }
 
 - (void)testPopToPrevious {
     // GIVEN:
     //   Three view controller classes (1, 2, 3)
     //   a navigation controller with the class chain 1 > 2 > 3
-    //   two navigation commands (1 > 2), (2 > 3)
+    //   one navigation commands (1 > 2)
     Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
     Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
     Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
@@ -93,13 +94,9 @@ static RLDCountingNavigationController *navigationController;
                                           secondViewControllerClass,
                                           thirdViewControllerClass]];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
-                                                  origins:@[firstViewControllerClass]
-                                              destination:secondViewControllerClass];
-    
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
-                                                  origins:@[secondViewControllerClass]
-                                              destination:thirdViewControllerClass];
+    Class navigationCommandClass = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
     
     // WHEN:
     //   We create a set up asking to navigate to the 2nd view controller class
@@ -110,22 +107,23 @@ static RLDCountingNavigationController *navigationController;
     [navigationSetup go];
     
     // THEN:
-    //   The class chain will be 1 > 2
-    //   The navigation controller has popped once, without any push
+    //   the class chain will be 1 > 2
+    //   the navigation controller has popped once, without any push
+    //   the navigation command has been executed
     NSArray *expectedClassChain = @[firstViewControllerClass,
                                     secondViewControllerClass];
-    BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
     
-    XCTAssert(hasExpectedClassChain);
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
     XCTAssertEqual(navigationController.pushCount, 0);
     XCTAssertEqual(navigationController.popCount, 1);
+    XCTAssertTrue([navigationCommandClass executed]);
 }
 
 - (void)testForwardPathSearching {
     // GIVEN:
     //   Five view controller classes (1, 2, 3, 4, 5)
     //   a navigation controller with the class chain 1 > 2 > 3
-    //   four navigation commands (1 > 2), (2 > 3), (3 > 4), (4 > 5)
+    //   two navigation commands (3 > 4), (4 > 5)
     Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
     Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
     Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
@@ -136,21 +134,13 @@ static RLDCountingNavigationController *navigationController;
                                           secondViewControllerClass,
                                           thirdViewControllerClass]];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
-                                                  origins:@[firstViewControllerClass]
-                                              destination:secondViewControllerClass];
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFourthViewController"
+                                                                                 origins:@[thirdViewControllerClass]
+                                                                             destination:fourthViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
-                                                  origins:@[secondViewControllerClass]
-                                              destination:thirdViewControllerClass];
-    
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFourthViewController"
-                                                  origins:@[thirdViewControllerClass]
-                                              destination:fourthViewControllerClass];
-    
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFourToFifthViewController"
-                                                  origins:@[fourthViewControllerClass]
-                                              destination:fifthViewControllerClass];
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFourToFifthViewController"
+                                                                                  origins:@[fourthViewControllerClass]
+                                                                              destination:fifthViewControllerClass];
     
     // WHEN:
     //   We create a set up asking to navigate to the 5th view controller class
@@ -162,68 +152,112 @@ static RLDCountingNavigationController *navigationController;
     
     // THEN:
     //   The class chain will be 1 > 2 > 3 > 4 > 5
-    //   The navigation controller has pushed twice, without any pop
+    //   the navigation commands have been executed 1 > 2
+    //   the navigation controller has pushed twice, without any pop
     NSArray *expectedClassChain = @[firstViewControllerClass,
                                     secondViewControllerClass,
                                     thirdViewControllerClass,
                                     fourthViewControllerClass,
                                     fifthViewControllerClass];
-    BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
+    NSArray *expectedExecutionOrder = @[firstNavigationCommand,
+                                        secondNavigationCommand];
     
-    XCTAssert(hasExpectedClassChain);
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
+    XCTAssertEqual(navigationController.pushCount, 2);
+    XCTAssertEqual(navigationController.popCount, 0);
+}
+
+- (void)testWildcardOriginsPathSearching {
+    // GIVEN:
+    //   Three view controller classes (1, 2, 3)
+    //   a navigation controller with an instance of the 1st class as the root view controller
+    //   two navigation commands (* > 2), (2 > 3)
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
+    Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
+    
+    [navigationController setRootViewControllerWithClass:firstViewControllerClass];
+    
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:nil
+                                                                             destination:secondViewControllerClass];
+    
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                                                  origins:@[secondViewControllerClass]
+                                                                              destination:thirdViewControllerClass];
+    
+    
+    // WHEN:
+    //   We create a set up asking to navigate to the 3rd view controller class
+    //   and we execute it
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
+                                                              navigationController:navigationController];
+    
+    [navigationSetup go];
+    
+    // THEN:
+    //   The class chain will be 1 > 2 > 3
+    //   the navigation commands have been executed 1 > 2
+    //   the navigation controller has pushed twice, without any pop
+    NSArray *expectedClassChain = @[firstViewControllerClass,
+                                    secondViewControllerClass,
+                                    thirdViewControllerClass];
+    NSArray *expectedExecutionOrder = @[firstNavigationCommand,
+                                        secondNavigationCommand];
+    
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
     XCTAssertEqual(navigationController.pushCount, 2);
     XCTAssertEqual(navigationController.popCount, 0);
 }
 
 - (void)testPopBeforePathSearching {
     // GIVEN:
-    //   Five view controller classes (1, 2, 3, 4, 5)
-    //   a navigation controller with the class chain 1 > 2 > 5
-    //   four navigation commands (1 > 2), (2 > 3), (3 > 4), (4, 5)
+    //   Four view controller classes (1, 2, 3, 4)
+    //   a navigation controller with the class chain 1 > 4
+    //   three navigation commands (*, 1), (1 > 2), (2 > 3)
     Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
     Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
     Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
     Class fourthViewControllerClass = NSClassFromString(fourthViewControllerClassName);
-    Class fifthViewControllerClass = NSClassFromString(fifthViewControllerClassName);
     
     [navigationController setClassChain:@[firstViewControllerClass,
-                                          secondViewControllerClass,
-                                          fifthViewControllerClass]];
+                                          fourthViewControllerClass]];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
-                                                  origins:@[firstViewControllerClass]
-                                              destination:secondViewControllerClass];
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandToFirstViewController"
+                                                                                 origins:nil
+                                                                             destination:firstViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
-                                                  origins:@[secondViewControllerClass]
-                                              destination:thirdViewControllerClass];
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                  origins:@[firstViewControllerClass]
+                                                                              destination:secondViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFourthViewController"
-                                                  origins:@[thirdViewControllerClass]
-                                              destination:fourthViewControllerClass];
-    
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFourToFifthViewController"
-                                                  origins:@[fourthViewControllerClass]
-                                              destination:fifthViewControllerClass];
+    Class thirdNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                                                 origins:@[secondViewControllerClass]
+                                                                             destination:thirdViewControllerClass];
     
     // WHEN:
-    //   We create a set up asking to navigate to the 4th view controller class
+    //   We create a set up asking to navigate to the 3rd view controller class
     //   and we execute it
-    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:fourthViewControllerClass
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
                                                               navigationController:navigationController];
     
     [navigationSetup go];
     
     // THEN:
     //   The class chain will be 1 > 2 > 3 > 4
-    //   The navigation controller has pushed twice, popped once
+    //   the navigation commands have been executed 1 > 2 > 3
+    //   the navigation controller has pushed twice, popped once
     NSArray *expectedClassChain = @[firstViewControllerClass,
                                     secondViewControllerClass,
-                                    thirdViewControllerClass,
-                                    fourthViewControllerClass];
-    BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
+                                    thirdViewControllerClass];
+    NSArray *expectedExecutionOrder = @[firstNavigationCommand,
+                                        secondNavigationCommand,
+                                        thirdNavigationCommand];
     
-    XCTAssert(hasExpectedClassChain);
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
     XCTAssertEqual(navigationController.pushCount, 2);
     XCTAssertEqual(navigationController.popCount, 1);
 }
@@ -241,29 +275,29 @@ static RLDCountingNavigationController *navigationController;
     
     [navigationController setRootViewControllerWithClass:firstViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
-                                                  origins:@[firstViewControllerClass]
-                                              destination:secondViewControllerClass];
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
-                                                  origins:@[secondViewControllerClass]
-                                              destination:thirdViewControllerClass];
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                                                  origins:@[secondViewControllerClass]
+                                                                              destination:thirdViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFourthViewController"
-                                                  origins:@[thirdViewControllerClass]
-                                              destination:fourthViewControllerClass];
+    Class thirdNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFourthViewController"
+                                                                                 origins:@[thirdViewControllerClass]
+                                                                             destination:fourthViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFourToFifthViewController"
-                                                  origins:@[fourthViewControllerClass]
-                                              destination:fifthViewControllerClass];
+    Class fourthNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFourToFifthViewController"
+                                                                                  origins:@[fourthViewControllerClass]
+                                                                              destination:fifthViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFistToThirdViewController"
-                                                  origins:@[firstViewControllerClass]
-                                              destination:thirdViewControllerClass];
+    Class fifthNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFistToThirdViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:thirdViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFifthViewController"
-                                                  origins:@[thirdViewControllerClass]
-                                              destination:fifthViewControllerClass];
+    Class sixthNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFifthViewController"
+                                                                                 origins:@[thirdViewControllerClass]
+                                                                             destination:fifthViewControllerClass];
     
     // WHEN:
     //   We create a set up asking to navigate to the 5th view controller class
@@ -275,13 +309,87 @@ static RLDCountingNavigationController *navigationController;
     
     // THEN:
     //   The class chain will be 1 > 3 > 5
-    //   The navigation controller has pushed twice, without any pop
+    //   the 5th and 6th navigation commands have been executed 5 > 6
+    //   the navigation commands from 1st to 4th haven't been executed
+    //   the navigation controller has pushed twice, without any pop
     NSArray *expectedClassChain = @[firstViewControllerClass,
                                     thirdViewControllerClass,
                                     fifthViewControllerClass];
-    BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
+    NSArray *expectedExecutionOrder = @[fifthNavigationCommand,
+                                        sixthNavigationCommand];
     
-    XCTAssert(hasExpectedClassChain);
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
+    XCTAssertFalse([firstNavigationCommand executed]);
+    XCTAssertFalse([secondNavigationCommand executed]);
+    XCTAssertFalse([thirdNavigationCommand executed]);
+    XCTAssertFalse([fourthNavigationCommand executed]);
+    XCTAssertEqual(navigationController.pushCount, 2);
+    XCTAssertEqual(navigationController.popCount, 0);
+}
+
+- (void)testWildcardOriginsBestRouteFinding {
+    // GIVEN:
+    //   Five view controller classes (1, 2, 3, 4, 5)
+    //   a navigation controller with an instance of the 1st class as the root view controller
+    //   six navigation commands (1 > 2), (2 > 3), (3 > 4), (4, 5), (* > 3), (* > 4)
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
+    Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
+    Class fourthViewControllerClass = NSClassFromString(fourthViewControllerClassName);
+    Class fifthViewControllerClass = NSClassFromString(fifthViewControllerClassName);
+    
+    [navigationController setRootViewControllerWithClass:firstViewControllerClass];
+    
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
+    
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                                                  origins:@[secondViewControllerClass]
+                                                                              destination:thirdViewControllerClass];
+    
+    Class thirdNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFourthViewController"
+                                                                                 origins:@[thirdViewControllerClass]
+                                                                             destination:fourthViewControllerClass];
+    
+    Class fourthNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFourToFifthViewController"
+                                                                                  origins:@[fourthViewControllerClass]
+                                                                              destination:fifthViewControllerClass];
+    
+    Class fifthNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandToThirdViewController"
+                                                                                 origins:nil
+                                                                             destination:thirdViewControllerClass];
+    
+    Class sixthNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandToFourthViewController"
+                                                                                 origins:nil
+                                                                             destination:fourthViewControllerClass];
+    
+    // WHEN:
+    //   We create a set up asking to navigate to the 5th view controller class
+    //   and we execute it
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:fifthViewControllerClass
+                                                              navigationController:navigationController];
+    
+    [navigationSetup go];
+    
+    // THEN:
+    //   The class chain will be 1 > 3 > 5
+    //   the 4th and 5th navigation commands have been executed 6 > 4
+    //   the 1st, 2nd, 3rd, 5th navigation commands haven't been executed
+    //   the navigation controller has pushed twice, without any pop
+    NSArray *expectedClassChain = @[firstViewControllerClass,
+                                    fourthViewControllerClass,
+                                    fifthViewControllerClass];
+    NSArray *expectedExecutionOrder = @[sixthNavigationCommand,
+                                        fourthNavigationCommand];
+    
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
+    XCTAssertFalse([firstNavigationCommand executed]);
+    XCTAssertFalse([secondNavigationCommand executed]);
+    XCTAssertFalse([thirdNavigationCommand executed]);
+    XCTAssertFalse([fifthNavigationCommand executed]);
     XCTAssertEqual(navigationController.pushCount, 2);
     XCTAssertEqual(navigationController.popCount, 0);
 }
@@ -299,29 +407,29 @@ static RLDCountingNavigationController *navigationController;
     
     [navigationController setRootViewControllerWithClass:firstViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
-                                                  origins:@[firstViewControllerClass]
-                                              destination:secondViewControllerClass];
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
-                                                  origins:@[secondViewControllerClass]
-                                              destination:thirdViewControllerClass];
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                                                  origins:@[secondViewControllerClass]
+                                                                              destination:thirdViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFourthViewController"
-                                                  origins:@[thirdViewControllerClass]
-                                              destination:fourthViewControllerClass];
+    Class thirdNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFourthViewController"
+                                                                                 origins:@[thirdViewControllerClass]
+                                                                             destination:fourthViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFourToFifthViewController"
-                                                  origins:@[fourthViewControllerClass]
-                                              destination:fifthViewControllerClass];
+    Class fourthNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFourToFifthViewController"
+                                                                                  origins:@[fourthViewControllerClass]
+                                                                              destination:fifthViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFistToThirdViewController"
-                                                  origins:@[firstViewControllerClass]
-                                              destination:thirdViewControllerClass];
+    Class fifthNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFistToThirdViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:thirdViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFifthViewController"
-                                                  origins:@[thirdViewControllerClass]
-                                              destination:fifthViewControllerClass];
+    Class sixthNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromThirdToFifthViewController"
+                                                                                 origins:@[thirdViewControllerClass]
+                                                                             destination:fifthViewControllerClass];
     
     // WHEN:
     //   We create a set up asking to navigate to the fifth view controller class
@@ -335,15 +443,24 @@ static RLDCountingNavigationController *navigationController;
     
     // THEN:
     //   The class chain will be 1 > 2 > 3 > 4 > 5
-    //   The navigation controller has pushed four times, without any pop
+    //   the navigation commands from 1st to 4th have been executed 1 > 2 > 3 > 4
+    //   the 5th and 6th navigation commands haven't been executed
+    //   the navigation controller has pushed four times, without any pop
     NSArray *expectedClassChain = @[firstViewControllerClass,
                                     secondViewControllerClass,
                                     thirdViewControllerClass,
                                     fourthViewControllerClass,
                                     fifthViewControllerClass];
-    BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
     
-    XCTAssert(hasExpectedClassChain);
+    NSArray *expectedExecutionOrder = @[firstNavigationCommand,
+                                        secondNavigationCommand,
+                                        thirdNavigationCommand,
+                                        fourthNavigationCommand];
+    
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
+    XCTAssertFalse([fifthNavigationCommand executed]);
+    XCTAssertFalse([sixthNavigationCommand executed]);
     XCTAssertEqual(navigationController.pushCount, 4);
     XCTAssertEqual(navigationController.popCount, 0);
 }
@@ -360,13 +477,13 @@ static RLDCountingNavigationController *navigationController;
     [navigationController setClassChain:@[firstViewControllerClass,
                                           thirdViewControllerClass]];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
-                                                  origins:@[firstViewControllerClass]
-                                              destination:secondViewControllerClass];
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
-                                                  origins:@[secondViewControllerClass]
-                                              destination:thirdViewControllerClass];
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                                                  origins:@[secondViewControllerClass]
+                                                                              destination:thirdViewControllerClass];
     
     // WHEN:
     //   We create a set up asking to navigate to the third view controller class
@@ -378,12 +495,14 @@ static RLDCountingNavigationController *navigationController;
     
     // THEN:
     //   The class chain will be 1 > 3
-    //   The navigation controller hasn't pushed nor popped
+    //   the navigation comands haven't been executed
+    //   the navigation controller hasn't pushed nor popped
     NSArray *expectedClassChain = @[firstViewControllerClass,
                                     thirdViewControllerClass];
-    BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
     
-    XCTAssert(hasExpectedClassChain);
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertFalse([firstNavigationCommand executed]);
+    XCTAssertFalse([secondNavigationCommand executed]);
     XCTAssertEqual(navigationController.pushCount, 0);
     XCTAssertEqual(navigationController.popCount, 0);
 }
@@ -401,17 +520,17 @@ static RLDCountingNavigationController *navigationController;
                                           secondViewControllerClass,
                                           thirdViewControllerClass]];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandToFirstViewController"
-                                                  origins:@[]
-                                              destination:secondViewControllerClass];
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandToFirstViewController"
+                                                                                 origins:nil
+                                                                             destination:firstViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
-                                                  origins:@[firstViewControllerClass]
-                                              destination:secondViewControllerClass];
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                  origins:@[firstViewControllerClass]
+                                                                              destination:secondViewControllerClass];
     
-    [RLDPushPopNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
-                                                  origins:@[secondViewControllerClass]
-                                              destination:thirdViewControllerClass];
+    Class thirdNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                                                 origins:@[secondViewControllerClass]
+                                                                             destination:thirdViewControllerClass];
     
     // WHEN:
     //   We create a set up asking to navigate to the third view controller class
@@ -424,13 +543,16 @@ static RLDCountingNavigationController *navigationController;
     
     // THEN:
     //   The class chain will be 1 > 2 > 3
-    //   The navigation controller hasn't pushed nor popped
+    //   the navigation comands haven't been executed
+    //   the navigation controller hasn't pushed nor popped
     NSArray *expectedClassChain = @[firstViewControllerClass,
                                     secondViewControllerClass,
                                     thirdViewControllerClass];
-    BOOL hasExpectedClassChain = [navigationController hasClassChain:expectedClassChain];
     
-    XCTAssert(hasExpectedClassChain);
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertFalse([firstNavigationCommand executed]);
+    XCTAssertFalse([secondNavigationCommand executed]);
+    XCTAssertFalse([thirdNavigationCommand executed]);
     XCTAssertEqual(navigationController.pushCount, 0);
     XCTAssertEqual(navigationController.popCount, 0);
 }

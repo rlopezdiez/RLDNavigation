@@ -18,14 +18,44 @@
 
 @end
 
-@implementation RLDPushPopNavigationCommand (TestingHelpers)
+@interface NSArray (ContentsComparison)
+
+- (BOOL)compareContentsWith:(NSArray *)comparisonAray;
+
+@end
+
+@implementation NSArray (ContentsComparison)
+
+- (BOOL)compareContentsWith:(NSArray *)comparisonAray {
+    if ([comparisonAray count] != [self count]) return NO;
+    
+    __block BOOL hasSameContents = YES;
+    [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        if ([obj class] != comparisonAray[idx]) {
+            hasSameContents = NO;
+            *stop = YES;
+        }
+        
+    }];
+    return hasSameContents;
+}
+
+@end
+
+static NSMutableArray *executedCommandClasses;
+
+@implementation RLDTestingNavigationCommand
+
++ (void)load {
+    executedCommandClasses = [NSMutableArray array];
+}
 
 + (Class)registerSubclassWithName:(NSString *)name origins:(NSArray *)origins destination:(Class)destination {
     Class newClass = [self registerSubclassWithName:name];
     
-    [newClass setReturnValue:origins forSelector:@selector(origins)];
-    [newClass setReturnValue:destination forSelector:@selector(destination)];
-    [newClass setReturnValue:nil forSelector:@selector(nibName)];
+    if (origins) [newClass setReturnValue:origins forSelector:@selector(origins)];
+    if (destination) [newClass setReturnValue:destination forSelector:@selector(destination)];
     [newClass setReturnValue:nil forSelector:@selector(viewControllerStoryboardIdentifier)];
     [newClass setReturnValue:nil forSelector:@selector(animatesTransitions)];
     
@@ -63,13 +93,29 @@
     });
 }
 
-+ (void)unregisterAllSubclasses {
++ (void)clearExecutionRegistryAndUnregisterAllSubclasses {
+    [executedCommandClasses removeAllObjects];
+
     NSMutableSet *availableCommandClasses = (NSMutableSet *)[RLDDirectNavigationCommand availableCommandClasses];
     do {
         Class commandClass = [availableCommandClasses anyObject];
         [availableCommandClasses removeObject:commandClass];
         objc_disposeClassPair(commandClass);
     } while ([availableCommandClasses count]);
+}
+
++ (BOOL)hasExecutionOrder:(NSArray *)executionOrder {
+    return [executedCommandClasses compareContentsWith:executionOrder];;
+}
+
++ (BOOL)executed {
+    return [executedCommandClasses containsObject:self];
+}
+
+- (void)execute {
+    [super execute];
+    
+    [executedCommandClasses addObject:[self class]];
 }
 
 @end
@@ -103,19 +149,7 @@
 }
 
 - (BOOL)hasClassChain:(NSArray *)classChain {
-    if ([classChain count] != [self.viewControllers count]) return NO;
-    
-    __block BOOL hasClassChain = YES;
-    [self.viewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        
-        if ([obj class] != classChain[idx]) {
-            hasClassChain = NO;
-            *stop = YES;
-        }
-        
-    }];
-    
-    return hasClassChain;
+    return [self.viewControllers compareContentsWith:classChain];;
 }
 
 - (void)setClassChain:(NSArray *)classChain {

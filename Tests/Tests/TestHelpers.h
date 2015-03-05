@@ -8,10 +8,12 @@
 
 @end
 
-@interface RLDPushPopNavigationCommand (TestingHelpers)
+@interface RLDTestingNavigationCommand : RLDPushPopNavigationCommand
 
 + (Class)registerSubclassWithName:(NSString *)name origins:(NSArray *)origins destination:(Class)destination;
-+ (void)unregisterAllSubclasses;
++ (void)clearExecutionRegistryAndUnregisterAllSubclasses;
++ (BOOL)hasExecutionOrder:(NSArray *)executionOrder;
++ (BOOL)executed;
 
 @end
 
