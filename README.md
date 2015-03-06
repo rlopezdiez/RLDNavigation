@@ -4,7 +4,7 @@ If you want to adhere to the single responsibility principle of object-oriented 
 
 `RLDNavigation` is a set of classes which allow you to decouple navigation from view controllers, using navigation command objects to define the possible navigation flows of your app.
 
-It implements routing using an [algorithm](http://en.wikipedia.org/wiki/Breadth-first_search) to resolve complex paths. It also prevents navigation cycles like `A > B > C > B`. A sample app is included.
+It implements routing using breadth-first search to resolve complex paths. It also prevents navigation cycles like `A > B > C > B`. A sample app is included.
 
 ## How to use
 
@@ -93,21 +93,47 @@ In the unlikely event that you want to use an URL-like navigation scheme, you ca
 }
 ```
 
+#### Registering navigation commands
+
+`RLDNavigationCommand` is a class cluster. When you call its factory method `navigationCommandWithNavigationSetup:` it will choose the navigation command class or chain of classes needed to navigate to the specified destination, creating the needed instances and calling their `execute` methods one after another. To be able to do this, `RLDNavigationCommand` needs to know all the available classes conforming to the `RLDNavigationCommand` protocol.
+
+By default, the first time you call the `execute` method of an instance of `RLDNavigationCommand`, it will analyse all the loaded classes, registering only the suitable ones. This can be quite time consuming, given that more than 4,000 clases are usually loaded at runtime.
+
+If you are concerned about performance, instead of using this automatic discovery system you can manually register your `RLDNavigationCommand` compliant classes using the category `RLDNavigationCommand+NavigationCommandRegister`. Once a class has been registered in such way, `RLDNavigationCommand` will understand that you have opted out of the automatic class discovering mechanism, and won't try to find new classes by itself. 
+
+When using manual registering, the best way to make sure all your classes are ready when needed is registering them in their `load` method. The included sample app implements this approach:
+
+```objectivec
+#import "RLDNavigationCommand+NavigationCommandRegister.h"
+...
+
++ (void)load {
+    [self registerCommandClass];
+}
+
+```
+
 ## Installing
 
 ### Using CocoaPods
 
-1. Include the following line in your `Podfile`:
-   ```
-   pod 'RLDNavigation', :git => 'https://github.com/rlopezdiez/RLDNavigation'
-   ```
-2. Run `pod install`
+To use the latest stable release of `RLDNavigationCommand`, just add the following to your project `Podfile`:
+
+```
+pod 'RLDNavigationCommand', '~> 0.3.0' 
+```
+
+If you like to live on the bleeding edge, you can use the `master` branch with:
+
+```
+pod 'RLDNavigation', :git => 'https://github.com/rlopezdiez/RLDNavigation'
+```
 
 ### Manually
 
 1. Clone, add as a submodule or [download.](https://github.com/rlopezdiez/RLDNavigation/zipball/master)
 2. Add all the files under `Classes` to your project.
-3. Make sure your project is configured to use ARC.
+3. Enjoy.
 
 ## License
 
