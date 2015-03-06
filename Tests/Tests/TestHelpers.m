@@ -3,7 +3,7 @@
 #import <objc/runtime.h>
 
 #import "RLDNavigationSetup.h"
-#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
+#import "RLDNavigationCommand+NavigationCommandRegister.h"
 
 @implementation NSObject (TestingHelpers)
 

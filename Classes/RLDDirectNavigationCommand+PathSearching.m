@@ -2,7 +2,7 @@
 
 #import "RLDNavigationSetup.h"
 
-@implementation RLDNavigationCommand (PathSearching)
+@implementation RLDDirectNavigationCommand (PathSearching)
 
 - (NSArray *)navigationCommandClassChainInClasses:(id<NSFastEnumeration>)availableCommandsClasses
                               withNavigationSetup:(RLDNavigationSetup *)navigationSetup {

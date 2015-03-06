@@ -30,7 +30,7 @@
 		45A80FAA1AA79A1C00F19112 /* RLDNavigationSetup+RLDContactCardViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A80FA91AA79A1C00F19112 /* RLDNavigationSetup+RLDContactCardViewModel.m */; };
 		45A80FAD1AA79B9F00F19112 /* RLDNavigationSetup+URLs.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A80FAC1AA79B9F00F19112 /* RLDNavigationSetup+URLs.m */; };
 		45B1C7181AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B1C7171AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.m */; };
-		45B1C71B1AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B1C71A1AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.m */; };
+		45B1C71B1AA24EA200B50484 /* RLDNavigationCommand+NavigationCommandRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B1C71A1AA24EA200B50484 /* RLDNavigationCommand+NavigationCommandRegister.m */; };
 		45B1C7211AA2853800B50484 /* RLDDirectNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B1C7201AA2853800B50484 /* RLDDirectNavigationCommand.m */; };
 		45B1C7241AA2860200B50484 /* RLDBreadcrumbNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B1C7231AA2860200B50484 /* RLDBreadcrumbNavigationCommand.m */; };
 		45CF6DE81AA0395800E76F62 /* RLDChatNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 45CF6DDD1AA0395800E76F62 /* RLDChatNavigationCommand.m */; };
@@ -85,8 +85,8 @@
 		45A80FAC1AA79B9F00F19112 /* RLDNavigationSetup+URLs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLDNavigationSetup+URLs.m"; sourceTree = "<group>"; };
 		45B1C7161AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLDDirectNavigationCommand+PathSearching.h"; sourceTree = "<group>"; };
 		45B1C7171AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLDDirectNavigationCommand+PathSearching.m"; sourceTree = "<group>"; };
-		45B1C7191AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLDDirectNavigationCommand+NavigationCommandRegister.h"; sourceTree = "<group>"; };
-		45B1C71A1AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLDDirectNavigationCommand+NavigationCommandRegister.m"; sourceTree = "<group>"; };
+		45B1C7191AA24EA200B50484 /* RLDNavigationCommand+NavigationCommandRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RLDNavigationCommand+NavigationCommandRegister.h"; sourceTree = "<group>"; };
+		45B1C71A1AA24EA200B50484 /* RLDNavigationCommand+NavigationCommandRegister.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLDNavigationCommand+NavigationCommandRegister.m"; sourceTree = "<group>"; };
 		45B1C71F1AA2853800B50484 /* RLDDirectNavigationCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLDDirectNavigationCommand.h; sourceTree = "<group>"; };
 		45B1C7201AA2853800B50484 /* RLDDirectNavigationCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLDDirectNavigationCommand.m; sourceTree = "<group>"; };
 		45B1C7221AA2860200B50484 /* RLDBreadcrumbNavigationCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLDBreadcrumbNavigationCommand.h; sourceTree = "<group>"; };
@@ -189,12 +189,12 @@
 				45144EE81AA3D9E000752BCB /* NSObject+PropertyChecking.m */,
 				45A60E7C1AA22E63004FB8F4 /* RLDNavigationCommand.h */,
 				45A60E7D1AA22E63004FB8F4 /* RLDNavigationCommand.m */,
+				45B1C7191AA24EA200B50484 /* RLDNavigationCommand+NavigationCommandRegister.h */,
+				45B1C71A1AA24EA200B50484 /* RLDNavigationCommand+NavigationCommandRegister.m */,
 				45B1C7221AA2860200B50484 /* RLDBreadcrumbNavigationCommand.h */,
 				45B1C7231AA2860200B50484 /* RLDBreadcrumbNavigationCommand.m */,
 				45B1C71F1AA2853800B50484 /* RLDDirectNavigationCommand.h */,
 				45B1C7201AA2853800B50484 /* RLDDirectNavigationCommand.m */,
-				45B1C7191AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.h */,
-				45B1C71A1AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.m */,
 				45B1C7161AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.h */,
 				45B1C7171AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.m */,
 				45A60E821AA22E63004FB8F4 /* RLDPushPopNavigationCommand.h */,
@@ -311,7 +311,7 @@
 				45B1C7181AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.m in Sources */,
 				458B52A81A9F32A900E2E7D0 /* main.m in Sources */,
 				45CF6DEC1AA0395800E76F62 /* RLDProfileNavigationCommand.m in Sources */,
-				45B1C71B1AA24EA200B50484 /* RLDDirectNavigationCommand+NavigationCommandRegister.m in Sources */,
+				45B1C71B1AA24EA200B50484 /* RLDNavigationCommand+NavigationCommandRegister.m in Sources */,
 				455AC0151AA68AB500B801BD /* RLDContactCardViewController.m in Sources */,
 				455AC0181AA68C0500B801BD /* RLDContactCardViewModel.m in Sources */,
 				45B1C7241AA2860200B50484 /* RLDBreadcrumbNavigationCommand.m in Sources */,

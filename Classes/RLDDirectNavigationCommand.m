@@ -1,5 +1,5 @@
 #import "RLDDirectNavigationCommand.h"
-#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
+#import "RLDNavigationCommand+NavigationCommandRegister.h"
 #import "RLDDirectNavigationCommand+PathSearching.h"
 
 #import "RLDNavigationSetup.h"

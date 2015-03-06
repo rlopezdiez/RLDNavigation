@@ -1,5 +1,5 @@
 #import "RLDContactCardViewModelNavigationCommand.h"
-#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
+#import "RLDNavigationCommand+NavigationCommandRegister.h"
 #import "RLDContactCardViewModel.h"
 
 static NSString *const destinationClassName = @"RLDContactCardViewController";

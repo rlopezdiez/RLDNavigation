@@ -3,7 +3,7 @@
 #import <UIKit/UIKit.h>
 #import "RLDNavigationSetup.h"
 #import "RLDProfileViewController.h"
-#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
+#import "RLDNavigationCommand+NavigationCommandRegister.h"
 
 static NSString *const originClassNameConnections = @"RLDConnectionsViewController";
 static NSString *const originClassNameProfile = @"RLDProfileViewController";

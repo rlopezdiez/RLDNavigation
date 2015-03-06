@@ -1,5 +1,5 @@
 #import "RLDFolderNavigationCommand.h"
-#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
+#import "RLDNavigationCommand+NavigationCommandRegister.h"
 
 static NSString *const originClassName = @"RLDMenuViewController";
 static NSString *const destinationClassName = @"RLDFolderViewController";

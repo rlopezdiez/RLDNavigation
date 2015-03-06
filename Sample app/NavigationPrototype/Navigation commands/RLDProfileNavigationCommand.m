@@ -3,7 +3,7 @@
 #import <UIKit/UIKit.h>
 #import "RLDNavigationSetup.h"
 #import "RLDChatViewController.h"
-#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
+#import "RLDNavigationCommand+NavigationCommandRegister.h"
 
 static NSString *const originClassNameChat = @"RLDChatViewController";
 static NSString *const originClassNameFolder = @"RLDFolderViewController";

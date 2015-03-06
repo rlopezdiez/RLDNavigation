@@ -1,6 +1,6 @@
-#import "RLDNavigationCommand.h"
+#import "RLDDirectNavigationCommand.h"
 
-@interface RLDNavigationCommand (PathSearching)
+@interface RLDDirectNavigationCommand (PathSearching)
 
 - (NSArray *)navigationCommandClassChainInClasses:(id<NSFastEnumeration>)availableCommandsClasses
                               withNavigationSetup:(RLDNavigationSetup *)navigationSetup;

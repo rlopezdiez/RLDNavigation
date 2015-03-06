@@ -1,6 +1,6 @@
-#import "RLDDirectNavigationCommand.h"
+#import "RLDNavigationCommand.h"
 
-@interface RLDDirectNavigationCommand (NavigationCommandRegister)
+@interface RLDNavigationCommand (NavigationCommandRegister)
 
 + (void)registerClassesConformingToNavigationCommandProtocol;
 + (void)registerCommandClass;

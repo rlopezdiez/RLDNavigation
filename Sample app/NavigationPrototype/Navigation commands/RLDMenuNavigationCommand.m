@@ -1,5 +1,5 @@
 #import "RLDMenuNavigationCommand.h"
-#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
+#import "RLDNavigationCommand+NavigationCommandRegister.h"
 
 static NSString *const destinationClassName = @"RLDMenuViewController";
 

@@ -1,10 +1,10 @@
-#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
+#import "RLDNavigationCommand+NavigationCommandRegister.h"
 
 #import <objc/runtime.h>
 
 static NSMutableSet *_availableCommandClasses;
 
-@implementation RLDDirectNavigationCommand (NavigationCommandRegister)
+@implementation RLDNavigationCommand (NavigationCommandRegister)
 
 + (void)registerClassesConformingToNavigationCommandProtocol {
     int classesCount = objc_getClassList(NULL, 0);
