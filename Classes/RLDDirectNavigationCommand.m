@@ -18,17 +18,13 @@
 
 @implementation RLDDirectNavigationCommand
 
-#pragma mark - Navigation command registering
-
-+ (void)initialize {
-    if (self != [RLDDirectNavigationCommand class]) return;
-    
-    [self registerClassesConformingToNavigationCommandProtocol];
-}
-
 #pragma mark - Execution
 
 - (void)execute {
+    if ([[[self class] availableCommandClasses] count] == 0) {
+        [[self class] registerClassesConformingToNavigationCommandProtocol];
+    }
+    
     RLDNavigationSetup *navigationSetup = [self.navigationSetup copy];
     
     for (Class navigationCommandClass in self.navigationCommandClassChain) {
