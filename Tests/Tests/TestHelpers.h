@@ -6,6 +6,10 @@
 
 + (Class)registerSubclassWithName:(NSString *)name;
 
++ (Class)registerSubclassWithName:(NSString *)name
+               readonlyProperties:(NSArray *)readonlyPropertyNames
+              readwriteProperties:(NSArray *)readwritePropertyNames;
+
 @end
 
 @interface RLDTestingNavigationCommand : RLDPushPopNavigationCommand

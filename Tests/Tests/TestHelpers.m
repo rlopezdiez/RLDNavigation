@@ -8,12 +8,44 @@
 @implementation NSObject (TestingHelpers)
 
 + (Class)registerSubclassWithName:(NSString *)name {
-    Class class = objc_getClass([name UTF8String]);
-    if (!class) {
-        class = objc_allocateClassPair(self, [name UTF8String], 0);
-        objc_registerClassPair(class);
+    return [self registerSubclassWithName:name
+                       readonlyProperties:nil
+                      readwriteProperties:nil];
+}
+
++ (Class)registerSubclassWithName:(NSString *)name
+               readonlyProperties:(NSArray *)readonlyPropertyNames
+              readwriteProperties:(NSArray *)readwritePropertyNames {
+    Class newClass = objc_getClass([name UTF8String]);
+    if (newClass) objc_disposeClassPair(newClass);
+    
+    newClass = objc_allocateClassPair(self, [name UTF8String], 0);
+    
+    for (NSString *readonlyPropertyName in readonlyPropertyNames) {
+        [newClass addPropertyWithName:readonlyPropertyName readonly:YES];
     }
-    return class;
+    
+    for (NSString *readwritePropertyName in readwritePropertyNames) {
+        [newClass addPropertyWithName:readwritePropertyName readonly:NO];
+    }
+    
+    objc_registerClassPair(newClass);
+    
+    return newClass;
+}
+
++ (void)addPropertyWithName:(NSString *)name readonly:(BOOL)isReadonly {
+    const char *propertyName = [name UTF8String];
+    
+    class_addIvar(self, propertyName, sizeof(id), log2(sizeof(id)), @encode(id));
+    
+    objc_property_attribute_t type = {"T", "@"};
+    objc_property_attribute_t retainOwnership = {"&", ""};
+    objc_property_attribute_t ivar  = {"V", propertyName};
+    objc_property_attribute_t readonly = {"R", ""};
+    objc_property_attribute_t propertyAttributes[] = {type, retainOwnership, ivar, readonly};
+    
+    class_addProperty(self, propertyName, propertyAttributes, (isReadonly ? 4 : 3));
 }
 
 @end

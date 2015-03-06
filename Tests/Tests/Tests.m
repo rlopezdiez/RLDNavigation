@@ -12,6 +12,9 @@ static NSString *const thirdViewControllerClassName = @"RLDThirdViewController";
 static NSString *const fourthViewControllerClassName = @"RLDFourthViewController";
 static NSString *const fifthViewControllerClassName = @"RLDFifthViewController";
 
+static NSString *const firstViewControllerWithPropertiesClassName = @"RLDFirstViewControllerWithProperties";
+static NSString *const secondViewControllerWithPropertiesClassName = @"RLDSecondViewControllerWithProperties";
+
 static RLDCountingNavigationController *navigationController;
 
 @interface Tests : XCTestCase
@@ -44,7 +47,7 @@ static RLDCountingNavigationController *navigationController;
     navigationController = [[RLDCountingNavigationController alloc] init];
 }
 
-#pragma mark - Test cases
+#pragma mark - General navigation test cases
 
 - (void)testDirectNavigation {
     // GIVEN:
@@ -79,6 +82,41 @@ static RLDCountingNavigationController *navigationController;
     XCTAssertEqual(navigationController.pushCount, 1);
     XCTAssertEqual(navigationController.popCount, 0);
     XCTAssertTrue([navigationCommandClass executed]);
+}
+
+- (void)testNavigationConservation {
+    // GIVEN:
+    //   Two view controller classes (1, 2)
+    //   a navigation controller with the class chain 1 > 2
+    //   a navigation command (1 > 2)
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
+    
+    NSArray *expectedClassChain = @[firstViewControllerClass,
+                                    secondViewControllerClass];
+    [navigationController setClassChain:expectedClassChain];
+    
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
+    
+    // WHEN:
+    //   We create a set up asking to navigate to the 2nd view controller class
+    //   and we execute it
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:secondViewControllerClass
+                                                              navigationController:navigationController];
+    
+    [navigationSetup go];
+    
+    // THEN:
+    //   The class chain will be 1 > 2
+    //   the navigation comands haven't been executed
+    //   the navigation controller hasn't pushed nor popped
+    
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertFalse([firstNavigationCommand executed]);
+    XCTAssertEqual(navigationController.pushCount, 0);
+    XCTAssertEqual(navigationController.popCount, 0);
 }
 
 - (void)testPopToPrevious {
@@ -118,6 +156,8 @@ static RLDCountingNavigationController *navigationController;
     XCTAssertEqual(navigationController.popCount, 1);
     XCTAssertTrue([navigationCommandClass executed]);
 }
+
+#pragma mark - Path searching test cases
 
 - (void)testForwardPathSearching {
     // GIVEN:
@@ -159,50 +199,6 @@ static RLDCountingNavigationController *navigationController;
                                     thirdViewControllerClass,
                                     fourthViewControllerClass,
                                     fifthViewControllerClass];
-    NSArray *expectedExecutionOrder = @[firstNavigationCommand,
-                                        secondNavigationCommand];
-    
-    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
-    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
-    XCTAssertEqual(navigationController.pushCount, 2);
-    XCTAssertEqual(navigationController.popCount, 0);
-}
-
-- (void)testWildcardOriginsPathSearching {
-    // GIVEN:
-    //   Three view controller classes (1, 2, 3)
-    //   a navigation controller with an instance of the 1st class as the root view controller
-    //   two navigation commands (* > 2), (2 > 3)
-    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
-    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
-    Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
-    
-    [navigationController setRootViewControllerWithClass:firstViewControllerClass];
-    
-    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
-                                                                                 origins:nil
-                                                                             destination:secondViewControllerClass];
-    
-    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
-                                                                                  origins:@[secondViewControllerClass]
-                                                                              destination:thirdViewControllerClass];
-    
-    
-    // WHEN:
-    //   We create a set up asking to navigate to the 3rd view controller class
-    //   and we execute it
-    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
-                                                              navigationController:navigationController];
-    
-    [navigationSetup go];
-    
-    // THEN:
-    //   The class chain will be 1 > 2 > 3
-    //   the navigation commands have been executed 1 > 2
-    //   the navigation controller has pushed twice, without any pop
-    NSArray *expectedClassChain = @[firstViewControllerClass,
-                                    secondViewControllerClass,
-                                    thirdViewControllerClass];
     NSArray *expectedExecutionOrder = @[firstNavigationCommand,
                                         secondNavigationCommand];
     
@@ -328,6 +324,52 @@ static RLDCountingNavigationController *navigationController;
     XCTAssertEqual(navigationController.popCount, 0);
 }
 
+#pragma mark - Wildcard origings test cases
+
+- (void)testWildcardOriginsPathSearching {
+    // GIVEN:
+    //   Three view controller classes (1, 2, 3)
+    //   a navigation controller with an instance of the 1st class as the root view controller
+    //   two navigation commands (* > 2), (2 > 3)
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
+    Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
+    
+    [navigationController setRootViewControllerWithClass:firstViewControllerClass];
+    
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandToSecondViewController"
+                                                                                 origins:nil
+                                                                             destination:secondViewControllerClass];
+    
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                                                  origins:@[secondViewControllerClass]
+                                                                              destination:thirdViewControllerClass];
+    
+    
+    // WHEN:
+    //   We create a set up asking to navigate to the 3rd view controller class
+    //   and we execute it
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
+                                                              navigationController:navigationController];
+    
+    [navigationSetup go];
+    
+    // THEN:
+    //   The class chain will be 1 > 2 > 3
+    //   the navigation commands have been executed 1 > 2
+    //   the navigation controller has pushed twice, without any pop
+    NSArray *expectedClassChain = @[firstViewControllerClass,
+                                    secondViewControllerClass,
+                                    thirdViewControllerClass];
+    NSArray *expectedExecutionOrder = @[firstNavigationCommand,
+                                        secondNavigationCommand];
+    
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
+    XCTAssertEqual(navigationController.pushCount, 2);
+    XCTAssertEqual(navigationController.popCount, 0);
+}
+
 - (void)testWildcardOriginsBestRouteFinding {
     // GIVEN:
     //   Five view controller classes (1, 2, 3, 4, 5)
@@ -393,6 +435,8 @@ static RLDCountingNavigationController *navigationController;
     XCTAssertEqual(navigationController.pushCount, 2);
     XCTAssertEqual(navigationController.popCount, 0);
 }
+
+#pragma mark - Breadcrumbs test cases
 
 - (void)testBreadcrumbs {
     // GIVEN:
@@ -465,48 +509,6 @@ static RLDCountingNavigationController *navigationController;
     XCTAssertEqual(navigationController.popCount, 0);
 }
 
-- (void)testNavigationConservation {
-    // GIVEN:
-    //   Three view controller classes (1, 2, 3)
-    //   a navigation controller with the class chain 1 > 3
-    //   two navigation commands (1 > 2), (2 > 3)
-    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
-    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
-    Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
-    
-    [navigationController setClassChain:@[firstViewControllerClass,
-                                          thirdViewControllerClass]];
-    
-    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
-                                                                                 origins:@[firstViewControllerClass]
-                                                                             destination:secondViewControllerClass];
-    
-    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
-                                                                                  origins:@[secondViewControllerClass]
-                                                                              destination:thirdViewControllerClass];
-    
-    // WHEN:
-    //   We create a set up asking to navigate to the third view controller class
-    //   and we execute it
-    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
-                                                              navigationController:navigationController];
-    
-    [navigationSetup go];
-    
-    // THEN:
-    //   The class chain will be 1 > 3
-    //   the navigation comands haven't been executed
-    //   the navigation controller hasn't pushed nor popped
-    NSArray *expectedClassChain = @[firstViewControllerClass,
-                                    thirdViewControllerClass];
-    
-    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
-    XCTAssertFalse([firstNavigationCommand executed]);
-    XCTAssertFalse([secondNavigationCommand executed]);
-    XCTAssertEqual(navigationController.pushCount, 0);
-    XCTAssertEqual(navigationController.popCount, 0);
-}
-
 - (void)testBreadcrumbNavigationConservation {
     // GIVEN:
     //   Three view controller classes (1, 2, 3)
@@ -554,6 +556,179 @@ static RLDCountingNavigationController *navigationController;
     XCTAssertFalse([secondNavigationCommand executed]);
     XCTAssertFalse([thirdNavigationCommand executed]);
     XCTAssertEqual(navigationController.pushCount, 0);
+    XCTAssertEqual(navigationController.popCount, 0);
+}
+
+#pragma mark - Property propagation test cases
+
+- (void)testPropertyPropagation {
+    // GIVEN:
+    //   Three view controller classes (1, 2, 3)
+    //   the 2nd and 3rd ones have a readwrite property
+    //   a navigation controller with an instance of the 1st class as the root view controller
+    //   two navigation commands (1 > 2), (2 > 3)
+    NSString *propertyName = @"propertyName";
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = [UIViewController registerSubclassWithName:firstViewControllerWithPropertiesClassName
+                                                              readonlyProperties:nil
+                                                             readwriteProperties:@[propertyName]];
+    Class thirdViewControllerClass = [UIViewController registerSubclassWithName:secondViewControllerWithPropertiesClassName
+                                                             readonlyProperties:nil
+                                                            readwriteProperties:@[propertyName]];
+    
+    [navigationController setRootViewControllerWithClass:firstViewControllerClass];
+    
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
+    
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                                                  origins:@[secondViewControllerClass]
+                                                                              destination:thirdViewControllerClass];
+    
+    
+    // WHEN:
+    //   We create a set up asking to navigate to the 3rd view controller class
+    //   propagating the readwrite property
+    //   and we execute it
+    NSString *propertyValue = @"expectedValue";
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
+                                                                        properties:@{propertyName : propertyValue}
+                                                              navigationController:navigationController];
+    
+    [navigationSetup go];
+    
+    // THEN:
+    //   The class chain will be 1 > 2 > 3
+    //   the 2nd and 3rd view controllers in the navigation stack will have the propagated property set
+    //   the navigation commands have been executed 1 > 2
+    //   the navigation controller has pushed twice, without any pop
+    NSArray *expectedClassChain = @[firstViewControllerClass,
+                                    secondViewControllerClass,
+                                    thirdViewControllerClass];
+    NSArray *expectedExecutionOrder = @[firstNavigationCommand,
+                                        secondNavigationCommand];
+    BOOL secondViewControllerHasPropertySet = [[navigationController.viewControllers[1] valueForKey:propertyName] isEqual:propertyValue];
+    BOOL thirdViewControllerHasPropertySet = [[navigationController.viewControllers[2] valueForKey:propertyName] isEqual:propertyValue];
+    
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertTrue(secondViewControllerHasPropertySet);
+    XCTAssertTrue(thirdViewControllerHasPropertySet);
+    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
+    XCTAssertEqual(navigationController.pushCount, 2);
+    XCTAssertEqual(navigationController.popCount, 0);
+}
+
+- (void)testReadonlyPropertyConservation {
+    // GIVEN:
+    //   Three view controller classes (1, 2, 3)
+    //   the 2nd one has a readonly property
+    //   the 3rd one has a readwrite property with the same name
+    //   two navigation commands (1 > 2), (2 > 3)
+    NSString *propertyName = @"propertyName";
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = [UIViewController registerSubclassWithName:firstViewControllerWithPropertiesClassName
+                                                              readonlyProperties:@[propertyName]
+                                                             readwriteProperties:nil];
+    Class thirdViewControllerClass = [UIViewController registerSubclassWithName:secondViewControllerWithPropertiesClassName
+                                                             readonlyProperties:nil
+                                                            readwriteProperties:@[propertyName]];
+    
+    [navigationController setRootViewControllerWithClass:firstViewControllerClass];
+    
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
+    
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                                                  origins:@[secondViewControllerClass]
+                                                                              destination:thirdViewControllerClass];
+    
+    
+    // WHEN:
+    //   We create a set up asking to navigate to the 3rd view controller class
+    //   propagating a readwrite property
+    //   and we execute it
+    NSString *propertyValue = @"expectedValue";
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
+                                                                        properties:@{propertyName : propertyValue}
+                                                              navigationController:navigationController];
+    
+    [navigationSetup go];
+    
+    // THEN:
+    //   The class chain will be 1 > 2 > 3
+    //   the 2nd view controller in the navigation stack won't have the propagated property set
+    //   the 3rd one will
+    //   the navigation commands have been executed 1 > 2
+    //   the navigation controller has pushed twice, without any pop
+    NSArray *expectedClassChain = @[firstViewControllerClass,
+                                    secondViewControllerClass,
+                                    thirdViewControllerClass];
+    NSArray *expectedExecutionOrder = @[firstNavigationCommand,
+                                        secondNavigationCommand];
+    BOOL secondViewControllerHasPropertySet = [[navigationController.viewControllers[1] valueForKey:propertyName] isEqual:propertyValue];
+    BOOL thirdViewControllerHasPropertySet = [[navigationController.viewControllers[2] valueForKey:propertyName] isEqual:propertyValue];
+    
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertFalse(secondViewControllerHasPropertySet);
+    XCTAssertTrue(thirdViewControllerHasPropertySet);
+    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
+    XCTAssertEqual(navigationController.pushCount, 2);
+    XCTAssertEqual(navigationController.popCount, 0);
+}
+
+- (void)testPropertySkipping {
+    // GIVEN:
+    //   Three view controller classes (1, 2, 3)
+    //   the 3rd one has a readwrite property
+    //   a navigation controller with an instance of the 1st class as the root view controller
+    //   two navigation commands (1 > 2), (2 > 3)
+    NSString *propertyName = @"propertyName";
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
+    Class thirdViewControllerClass = [UIViewController registerSubclassWithName:thirdViewControllerClassName
+                                                             readonlyProperties:nil
+                                                            readwriteProperties:@[propertyName]];
+    
+    [navigationController setRootViewControllerWithClass:firstViewControllerClass];
+    
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:firstViewControllerWithPropertiesClassName
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
+    
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:secondViewControllerWithPropertiesClassName
+                                                                                  origins:@[secondViewControllerClass]
+                                                                              destination:thirdViewControllerClass];
+    
+    
+    // WHEN:
+    //   We create a set up asking to navigate to the 3rd view controller class
+    //   propagating the readwrite property
+    //   and we execute it
+    NSString *propertyValue = @"expectedValue";
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
+                                                                        properties:@{propertyName : propertyValue}
+                                                              navigationController:navigationController];
+    
+    [navigationSetup go];
+    
+    // THEN:
+    //   The class chain will be 1 > 2 > 3
+    //   the 3rd view controller in the navigation stack will have the propagated property set
+    //   the navigation commands have been executed 1 > 2
+    //   the navigation controller has pushed twice, without any pop
+    NSArray *expectedClassChain = @[firstViewControllerClass,
+                                    secondViewControllerClass,
+                                    thirdViewControllerClass];
+    NSArray *expectedExecutionOrder = @[firstNavigationCommand,
+                                        secondNavigationCommand];
+    BOOL thirdViewControllerHasPropertySet = [[navigationController.viewControllers[2] valueForKey:propertyName] isEqual:propertyValue];
+    
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertTrue(thirdViewControllerHasPropertySet);
+    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
+    XCTAssertEqual(navigationController.pushCount, 2);
     XCTAssertEqual(navigationController.popCount, 0);
 }
 
