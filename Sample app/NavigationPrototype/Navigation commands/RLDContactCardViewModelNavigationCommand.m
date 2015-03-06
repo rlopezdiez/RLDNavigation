@@ -1,9 +1,16 @@
 #import "RLDContactCardViewModelNavigationCommand.h"
+#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
 #import "RLDContactCardViewModel.h"
 
 static NSString *const destinationClassName = @"RLDContactCardViewController";
 
 @implementation RLDContactCardViewModelNavigationCommand
+
+#pragma mark - Navigation command registering
+
++ (void)load {
+    [self registerCommandClass];
+}
 
 #pragma mark - Suitability checking
 

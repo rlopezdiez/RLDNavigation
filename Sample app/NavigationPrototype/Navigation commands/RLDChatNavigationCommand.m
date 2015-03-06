@@ -3,6 +3,7 @@
 #import <UIKit/UIKit.h>
 #import "RLDNavigationSetup.h"
 #import "RLDProfileViewController.h"
+#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
 
 static NSString *const originClassNameConnections = @"RLDConnectionsViewController";
 static NSString *const originClassNameProfile = @"RLDProfileViewController";
@@ -10,6 +11,12 @@ static NSString *const originClassNameProfile = @"RLDProfileViewController";
 static NSString *const destinationClassName = @"RLDChatViewController";
 
 @implementation RLDChatNavigationCommand
+
+#pragma mark - Navigation command registering
+
++ (void)load {
+    [self registerCommandClass];
+}
 
 #pragma mark - Suitability checking
 

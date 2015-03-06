@@ -1,9 +1,16 @@
 #import "RLDConnectionsNavigationCommand.h"
+#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
 
 static NSString *const originClassName = @"RLDMenuViewController";
 static NSString *const destinationClassName = @"RLDConnectionsViewController";
 
 @implementation RLDConnectionsNavigationCommand
+
+#pragma mark - Navigation command registering
+
++ (void)load {
+    [self registerCommandClass];
+}
 
 #pragma mark - Suitability checking
 

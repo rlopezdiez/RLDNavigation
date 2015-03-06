@@ -1,8 +1,15 @@
 #import "RLDMenuNavigationCommand.h"
+#import "RLDDirectNavigationCommand+NavigationCommandRegister.h"
 
 static NSString *const destinationClassName = @"RLDMenuViewController";
 
 @implementation RLDMenuNavigationCommand
+
+#pragma mark - Navigation command registering
+
++ (void)load {
+    [self registerCommandClass];
+}
 
 #pragma mark - Suitability checking
 
