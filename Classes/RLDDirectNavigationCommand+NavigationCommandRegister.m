@@ -7,22 +7,30 @@ static NSMutableSet *_availableCommandClasses;
 @implementation RLDDirectNavigationCommand (NavigationCommandRegister)
 
 + (void)registerClassesConformingToNavigationCommandProtocol {
-    _availableCommandClasses = [NSMutableSet set];
-    
     int classesCount = objc_getClassList(NULL, 0);
-    Class* classes = (Class *)malloc(sizeof(Class) * classesCount);
+    Class *classes = (Class *)malloc(sizeof(Class) *classesCount);
     classesCount = objc_getClassList(classes, classesCount);
     
     for (NSUInteger index = 0; index < classesCount; index++) {
         Class class = classes[index];
-        
-        if (class != self
-            && [self classConformsToNavigationCommandProtocol:class]
-            && [class destination]) {
-            [_availableCommandClasses addObject:class];
+        if (class != self) {
+            [self addClassToListOfAvailableNavigationCommands:class];
         }
     }
     free(classes);
+}
+
++ (void)registerCommandClass {
+    [self addClassToListOfAvailableNavigationCommands:self];
+}
+
++ (void)addClassToListOfAvailableNavigationCommands:(Class)class {
+    _availableCommandClasses = _availableCommandClasses ?: [NSMutableSet set];
+
+    if ([self classConformsToNavigationCommandProtocol:class]
+        && [class destination]) {
+        [_availableCommandClasses addObject:class];
+    }
 }
 
 + (BOOL)classConformsToNavigationCommandProtocol:(Class)class {
