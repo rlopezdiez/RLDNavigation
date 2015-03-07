@@ -91,7 +91,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="chatFromProfileTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="f1K-bb-YIO"/>
+                                    <action selector="chatFromProfileTapped" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XQ5-aq-9pI"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -236,7 +236,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="chatWithFirstUserTapped" destination="2bK-SV-cai" eventType="touchUpInside" id="5UA-3I-Ad5"/>
+                                    <action selector="profileOfFirstUserTapped" destination="2bK-SV-cai" eventType="touchUpInside" id="y9s-Ci-5EA"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M4N-bo-f5t">
@@ -248,7 +248,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="chatWithSecondUserTapped" destination="2bK-SV-cai" eventType="touchUpInside" id="54b-GP-O7V"/>
+                                    <action selector="profileOfSecondUserTapped" destination="2bK-SV-cai" eventType="touchUpInside" id="CVh-7b-Z73"/>
                                 </connections>
                             </button>
                         </subviews>

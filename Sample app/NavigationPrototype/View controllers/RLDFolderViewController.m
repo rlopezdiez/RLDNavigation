@@ -4,11 +4,11 @@
 
 @implementation RLDFolderViewController
 
-- (IBAction)chatWithFirstUserTapped {
+- (IBAction)profileOfFirstUserTapped {
     [self navigateToProfileWithUserId:@"1"];
 }
 
-- (IBAction)chatWithSecondUserTapped {
+- (IBAction)profileOfSecondUserTapped {
     [self navigateToProfileWithUserId:@"2"];
 }
 

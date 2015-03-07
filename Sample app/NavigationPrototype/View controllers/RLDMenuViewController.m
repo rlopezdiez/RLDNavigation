@@ -22,7 +22,7 @@
                          navigationController:self.navigationController] go];
 }
 
-- (IBAction)chatFromProfileTapped:(id)sender {
+- (IBAction)chatFromProfileTapped {
     [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDChatViewController")
                                    properties:@{@"userId" : @"1"}
                                   breadcrumbs: @[NSClassFromString(@"RLDProfileViewController")]

@@ -2,7 +2,7 @@
 
 @interface RLDPushPopNavigationCommand : RLDDirectNavigationCommand
 
-+ (NSString *)viewControllerStoryboardIdentifier;
++ (NSString *)viewControllerStoryboardIdentifier; // Optional
 + (NSString *)nibName; // Defaults to @"Main"
 
 + (BOOL)animatesTransitions; // Defaults to YES
