@@ -75,13 +75,11 @@
                                                                 navigationController:self.navigationSetup.navigationController];
     
     BOOL shouldStop = NO;
-    BOOL found;
     for (Class navigationCommandClass in navigationCommandClasses) {
         if (!destination) {
             navigationSetup.destination = [navigationCommandClass destination];
         }
         if (([navigationCommandClass canHandleNavigationSetup:navigationSetup]) && ([navigationCommandClass destination])) {
-            found = YES;
             block(navigationCommandClass, &shouldStop);
         }
         if (shouldStop) break;
