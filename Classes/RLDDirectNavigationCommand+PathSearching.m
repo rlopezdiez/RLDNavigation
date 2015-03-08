@@ -94,15 +94,12 @@
     NSMutableArray *navigationCommandClassChain = [NSMutableArray array];
     
     Class class = lastNavigationCommandClass;
-    BOOL classIsOrigin = NO;
-    while (class) {
+    do {
         [navigationCommandClassChain insertObject:class atIndex:0];
-        if (classIsOrigin) break;
-        
+        if ([originNavigationCommandClasses containsObject:class]) break;
         class = [linksBetweenNavigationCommands objectForKey:class];
-        classIsOrigin = [originNavigationCommandClasses containsObject:class];
-    }
-    
+    } while (class);
+
     return [navigationCommandClassChain copy];
 }
 
