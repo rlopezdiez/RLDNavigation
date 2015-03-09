@@ -27,8 +27,4 @@ static NSString *const destinationClassName = @"RLDContactCardViewController";
     return destinationClassName;
 }
 
-- (void)execute {
-    [super execute];
-}
-
 @end
