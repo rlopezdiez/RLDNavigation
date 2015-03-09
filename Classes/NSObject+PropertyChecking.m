@@ -25,5 +25,12 @@
     return property;
 }
 
+- (void)setProperties:(NSDictionary *)properties {
+    [properties enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+        if ([self canSetProperty:key]) {
+            [self setValue:value forKey:key];
+        }
+    }];
+}
 
 @end

@@ -83,12 +83,7 @@ static NSString *const defaultnibName = @"Main";
 
 - (void)configureViewController:(UIViewController *)viewController {
     [viewController loadView];
-    
-    [[(RLDNavigationSetup *)self.navigationSetup properties] enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-        if ([viewController canSetProperty:key]) {
-            [viewController setValue:value forKey:key];
-        }
-    }];
+    [viewController setProperties:self.navigationSetup.properties];
 }
 
 @end
