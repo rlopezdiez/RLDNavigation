@@ -117,10 +117,10 @@ When using manual registering, the best way to make sure all your classes are re
 
 ### Using CocoaPods
 
-To use the latest stable release of `RLDNavigationCommand`, just add the following to your project `Podfile`:
+To use the latest stable release of `RLDNavigation`, just add the following to your project `Podfile`:
 
 ```
-pod 'RLDNavigationCommand', '~> 0.3.0' 
+pod 'RLDNavigation', '~> 0.4.0' 
 ```
 
 If you like to live on the bleeding edge, you can use the `master` branch with:
