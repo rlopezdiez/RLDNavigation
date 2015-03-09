@@ -61,7 +61,7 @@
     NSScanner *queryScanner = [NSScanner scannerWithString:query];
     
     NSCharacterSet *controlCharacters = [NSCharacterSet characterSetWithCharactersInString:@"&?="];
-    [queryScanner setCharactersToBeSkipped:controlCharacters];
+    queryScanner.charactersToBeSkipped = controlCharacters;
     
     NSString *keyOrValue, *key, *value;
     while ([queryScanner scanUpToCharactersFromSet:controlCharacters intoString:&keyOrValue]) {
