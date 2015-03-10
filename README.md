@@ -6,6 +6,8 @@ If you want to adhere to the single responsibility principle of object-oriented 
 
 It implements routing using breadth-first search to resolve complex paths. It also prevents navigation cycles like `A > B > C > B`. A sample app is included.
 
+> [Swift version](https://github.com/rlopezdiez/RLDNavigationSwift) also available.
+
 ## How to use
 
 ### Environment setup
@@ -139,4 +141,4 @@ pod 'RLDNavigation', :git => 'https://github.com/rlopezdiez/RLDNavigation'
 
 `RLDNavigation` is available under the Apache License, Version 2.0. See LICENSE file for more info.
 
-> This README has been made with [(GitHub-Flavored) Markdown Editor](http://jbt.github.io/markdown-editor)
+This README has been made with [(GitHub-Flavored) Markdown Editor](http://jbt.github.io/markdown-editor)
