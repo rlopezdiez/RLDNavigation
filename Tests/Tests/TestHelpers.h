@@ -2,6 +2,12 @@
 
 #import <UIKit/UIKit.h>
 
+@interface NSRunLoop (Waiting)
+
++ (void)waitFor:(BOOL(^)(void))conditionBlock withTimeout:(NSTimeInterval)seconds;
+
+@end
+
 @interface NSObject (TestingHelpers)
 
 + (Class)registerSubclassWithName:(NSString *)name;

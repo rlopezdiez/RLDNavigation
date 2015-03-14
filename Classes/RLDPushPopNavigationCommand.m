@@ -52,12 +52,17 @@ static NSString *const defaultnibName = @"Main";
 #pragma mark - Execution
 
 - (void)execute {
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:self.completionBlock];
+
     UIViewController *viewControllerToReturnTo = [self.navigationSetup.navigationController viewControllerForNavigationSetup:self.navigationSetup];
-    if (viewControllerToReturnTo) {
-        [self popToViewController:viewControllerToReturnTo];
-    } else {
-        [self pushNewViewController];
-    }
+        if (viewControllerToReturnTo) {
+            [self popToViewController:viewControllerToReturnTo];
+        } else {
+            [self pushNewViewController];
+        }
+
+    [CATransaction commit];
 }
 
 - (void)popToViewController:(UIViewController *)viewControllerToReturnTo {

@@ -5,7 +5,12 @@
 @implementation RLDNavigationSetup (RLDNavigationCommand)
 
 - (void)go {
-    [[RLDNavigationCommand navigationCommandWithNavigationSetup:self] execute];
+    [self goWithCompletionBlock:NULL];
+}
+
+- (void)goWithCompletionBlock:(void(^)(void))completionBlock {
+    [[RLDNavigationCommand navigationCommandWithNavigationSetup:self
+                                                completionBlock:completionBlock] execute];
 }
 
 @end

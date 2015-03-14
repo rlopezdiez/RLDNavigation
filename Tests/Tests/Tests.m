@@ -66,10 +66,14 @@ static RLDCountingNavigationController *navigationController;
     // WHEN:
     //   We create a set up asking to navigate to the 2nd view controller class
     //   and we execute it
+    //   and we wait until the execution finishes
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:secondViewControllerClass
                                                               navigationController:navigationController];
     
     [navigationSetup go];
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == secondViewControllerClass;
+    } withTimeout:0.2];
     
     // THEN:
     //   The class chain must be 1 > 2
@@ -103,16 +107,19 @@ static RLDCountingNavigationController *navigationController;
     // WHEN:
     //   We create a set up asking to navigate to the 2nd view controller class
     //   and we execute it
+    //   and we wait until the execution finishes
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:secondViewControllerClass
                                                               navigationController:navigationController];
     
     [navigationSetup go];
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == secondViewControllerClass;
+    } withTimeout:0.2];
     
     // THEN:
     //   The class chain will be 1 > 2
     //   the navigation comands haven't been executed
     //   the navigation controller hasn't pushed nor popped
-    
     XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
     XCTAssertFalse([firstNavigationCommand executed]);
     XCTAssertEqual(navigationController.pushCount, 0);
@@ -139,10 +146,14 @@ static RLDCountingNavigationController *navigationController;
     // WHEN:
     //   We create a set up asking to navigate to the 2nd view controller class
     //   and we execute it
+    //   and we wait until the execution finishes
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:secondViewControllerClass
                                                               navigationController:navigationController];
     
     [navigationSetup go];
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == secondViewControllerClass;
+    } withTimeout:0.2];
     
     // THEN:
     //   the class chain will be 1 > 2
@@ -185,10 +196,14 @@ static RLDCountingNavigationController *navigationController;
     // WHEN:
     //   We create a set up asking to navigate to the 5th view controller class
     //   and we execute it
+    //   and we wait until the execution finishes
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:fifthViewControllerClass
                                                               navigationController:navigationController];
     
     [navigationSetup go];
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == fifthViewControllerClass;
+    } withTimeout:0.2];
     
     // THEN:
     //   The class chain will be 1 > 2 > 3 > 4 > 5
@@ -236,11 +251,15 @@ static RLDCountingNavigationController *navigationController;
     // WHEN:
     //   We create a set up asking to navigate to the 3rd view controller class
     //   and we execute it
+    //   and we wait until the execution finishes
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
                                                               navigationController:navigationController];
     
     [navigationSetup go];
-    
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == thirdNavigationCommand;
+    } withTimeout:0.2];
+
     // THEN:
     //   The class chain will be 1 > 2 > 3 > 4
     //   the navigation commands have been executed 1 > 2 > 3
@@ -298,10 +317,14 @@ static RLDCountingNavigationController *navigationController;
     // WHEN:
     //   We create a set up asking to navigate to the 5th view controller class
     //   and we execute it
+    //   and we wait until the execution finishes
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:fifthViewControllerClass
                                                               navigationController:navigationController];
     
     [navigationSetup go];
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == fifthViewControllerClass;
+    } withTimeout:0.2];
     
     // THEN:
     //   The class chain will be 1 > 3 > 5
@@ -349,10 +372,14 @@ static RLDCountingNavigationController *navigationController;
     // WHEN:
     //   We create a set up asking to navigate to the 3rd view controller class
     //   and we execute it
+    //   and we wait until the execution finishes
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
                                                               navigationController:navigationController];
     
     [navigationSetup go];
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == thirdViewControllerClass;
+    } withTimeout:0.2];
     
     // THEN:
     //   The class chain will be 1 > 2 > 3
@@ -414,12 +441,15 @@ static RLDCountingNavigationController *navigationController;
                                                               navigationController:navigationController];
     
     [navigationSetup go];
-    
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == fifthViewControllerClass;
+    } withTimeout:0.2];
     // THEN:
     //   The class chain will be 1 > 3 > 5
     //   the 4th and 5th navigation commands have been executed 6 > 4
     //   the 1st, 2nd, 3rd, 5th navigation commands haven't been executed
     //   the navigation controller has pushed twice, without any pop
+    //   and we wait until the execution finishes
     NSArray *expectedClassChain = @[firstViewControllerClass,
                                     fourthViewControllerClass,
                                     fifthViewControllerClass];
@@ -438,7 +468,7 @@ static RLDCountingNavigationController *navigationController;
 
 #pragma mark - Breadcrumbs test cases
 
-- (void)testBreadcrumbs {
+- (void)testBreadcrumbNavigation {
     // GIVEN:
     //   Five view controller classes (1, 2, 3, 4, 5)
     //   a navigation controller with an instance of the first as the root view controller
@@ -479,12 +509,16 @@ static RLDCountingNavigationController *navigationController;
     //   We create a set up asking to navigate to the fifth view controller class
     //   passing by the second and fourth view controllers classes
     //   and we execute it
+    //   and we wait until the execution finishes
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:fifthViewControllerClass
                                                                        breadcrumbs:@[secondViewControllerClass, fourthViewControllerClass]
                                                               navigationController:navigationController];
     
     [navigationSetup go];
-    
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == fifthViewControllerClass;
+    } withTimeout:0.2];
+
     // THEN:
     //   The class chain will be 1 > 2 > 3 > 4 > 5
     //   the navigation commands from 1st to 4th have been executed 1 > 2 > 3 > 4
@@ -537,12 +571,16 @@ static RLDCountingNavigationController *navigationController;
     // WHEN:
     //   We create a set up asking to navigate to the third view controller class
     //   and we execute it
+    //   and we wait until the execution finishes
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
                                                                        breadcrumbs:@[secondViewControllerClass]
                                                               navigationController:navigationController];
     
     [navigationSetup go];
-    
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == thirdViewControllerClass;
+    } withTimeout:0.2];
+
     // THEN:
     //   The class chain will be 1 > 2 > 3
     //   the navigation comands haven't been executed
@@ -591,13 +629,17 @@ static RLDCountingNavigationController *navigationController;
     //   We create a set up asking to navigate to the 3rd view controller class
     //   propagating the readwrite property
     //   and we execute it
+    //   and we wait until the execution finishes
     NSString *propertyValue = @"expectedValue";
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
                                                                         properties:@{propertyName : propertyValue}
                                                               navigationController:navigationController];
     
     [navigationSetup go];
-    
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == thirdViewControllerClass;
+    } withTimeout:0.2];
+
     // THEN:
     //   The class chain will be 1 > 2 > 3
     //   the 2nd and 3rd view controllers in the navigation stack will have the propagated property set
@@ -649,13 +691,17 @@ static RLDCountingNavigationController *navigationController;
     //   We create a set up asking to navigate to the 3rd view controller class
     //   propagating a readwrite property
     //   and we execute it
+    //   and we wait until the execution finishes
     NSString *propertyValue = @"expectedValue";
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
                                                                         properties:@{propertyName : propertyValue}
                                                               navigationController:navigationController];
     
     [navigationSetup go];
-    
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == thirdViewControllerClass;
+    } withTimeout:0.2];
+
     // THEN:
     //   The class chain will be 1 > 2 > 3
     //   the 2nd view controller in the navigation stack won't have the propagated property set
@@ -706,13 +752,17 @@ static RLDCountingNavigationController *navigationController;
     //   We create a set up asking to navigate to the 3rd view controller class
     //   propagating the readwrite property
     //   and we execute it
+    //   and we wait until the execution finishes
     NSString *propertyValue = @"expectedValue";
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
                                                                         properties:@{propertyName : propertyValue}
                                                               navigationController:navigationController];
     
     [navigationSetup go];
-    
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == thirdViewControllerClass;
+    } withTimeout:0.2];
+
     // THEN:
     //   The class chain will be 1 > 2 > 3
     //   the 3rd view controller in the navigation stack will have the propagated property set
@@ -763,12 +813,16 @@ static RLDCountingNavigationController *navigationController;
     //   We create a set up asking to navigate to the 2nd view controller class
     //   with the property set to the expected value
     //   and we execute it
+    //   and we wait until the execution finishes
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:secondViewControllerClass
                                                                         properties:@{propertyName : propertyValue}
                                                               navigationController:navigationController];
     
     [navigationSetup go];
-    
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == thirdViewControllerClass;
+    } withTimeout:0.2];
+
     // THEN:
     //   the class chain will be 1 > 2
     //   the 2nd view controller in the navigation chain has its property set
@@ -819,12 +873,16 @@ static RLDCountingNavigationController *navigationController;
     //   We create a set up asking to navigate to the 2nd view controller class
     //   with the property set to a different value
     //   and we execute it
+    //   and we wait until the execution finishes
     NSString *expectedValue = @"expectedValue";
     RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:secondViewControllerClass
                                                                         properties:@{propertyName : expectedValue}
                                                               navigationController:navigationController];
     
     [navigationSetup go];
+    [NSRunLoop waitFor:^BOOL{
+        return [navigationController.topViewController class] == secondViewControllerClass ;
+    } withTimeout:0.2];
     
     // THEN:
     //   the class chain will be 1 > 2
@@ -842,6 +900,107 @@ static RLDCountingNavigationController *navigationController;
     XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
     XCTAssertEqual(navigationController.pushCount, 1);
     XCTAssertEqual(navigationController.popCount, 1);
+}
+
+#pragma mark - Completion blocks test cases
+
+- (void)testDirectNavigationCompletionBlock {
+    // GIVEN:
+    //   Two view controller classes (1, 2)
+    //   a navigation controller with an instance of the 1st class as the root view controller
+    //   a navigation command between the two classes (1 > 2)
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
+    
+    Class navigationCommandClass = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
+    
+    [navigationController setRootViewControllerWithClass:firstViewControllerClass];
+    
+    // WHEN:
+    //   We create a set up asking to navigate to the 2nd view controller class
+    //   and we execute it with a completion block
+    //   and we wait until the execution finishes
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:secondViewControllerClass
+                                                              navigationController:navigationController];
+    
+    __block BOOL completionBlockExecuted = NO;
+    [navigationSetup goWithCompletionBlock:^{
+        completionBlockExecuted = YES;
+    }];
+    [NSRunLoop waitFor:^BOOL{
+        return completionBlockExecuted;
+    } withTimeout:0.2];
+    
+    // THEN:
+    //   The class chain must be 1 > 2
+    //   the navigation controller has pushed once, without any pop
+    //   the navigation command has been executed
+    //   the completion block has been executed
+    NSArray *expectedClassChain = @[firstViewControllerClass,
+                                    secondViewControllerClass];
+    
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertEqual(navigationController.pushCount, 1);
+    XCTAssertEqual(navigationController.popCount, 0);
+    XCTAssertTrue([navigationCommandClass executed]);
+    XCTAssertTrue(completionBlockExecuted);
+}
+
+- (void)testBreadcrumbNavigationCompletionBlock {
+    // GIVEN:
+    //   Three view controller classes (1, 2, 3)
+    //   a navigation controller with an instance of the first as the root view controller
+    //   six navigation commands (1 > 2), (2 > 3)
+    Class firstViewControllerClass = NSClassFromString(firstViewControllerClassName);
+    Class secondViewControllerClass = NSClassFromString(secondViewControllerClassName);
+    Class thirdViewControllerClass = NSClassFromString(thirdViewControllerClassName);
+    
+    [navigationController setRootViewControllerWithClass:firstViewControllerClass];
+    
+    Class firstNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromFirstToSecondViewController"
+                                                                                 origins:@[firstViewControllerClass]
+                                                                             destination:secondViewControllerClass];
+    
+    Class secondNavigationCommand = [RLDTestingNavigationCommand registerSubclassWithName:@"navigationCommandFromSecondToThirdViewController"
+                                                                                  origins:@[secondViewControllerClass]
+                                                                              destination:thirdViewControllerClass];
+    
+    // WHEN:
+    //   We create a set up asking to navigate to the third view controller class
+    //   passing by the second view controller classes
+    //   and we execute it with a completion block
+    //   and we wait until the execution finishes
+    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:thirdViewControllerClass
+                                                                       breadcrumbs:@[secondViewControllerClass]
+                                                              navigationController:navigationController];
+    
+    __block BOOL completionBlockExecuted = NO;
+    [navigationSetup goWithCompletionBlock:^{
+        completionBlockExecuted = YES;
+    }];
+    [NSRunLoop waitFor:^BOOL{
+        return completionBlockExecuted;
+    } withTimeout:0.2];
+    
+    // THEN:
+    //   The class chain will be 1 > 2 > 3
+    //   the navigation commands have been executed 1 > 2
+    //   the navigation controller has pushed twice, without any pop
+    //   the completion block has been executed
+    NSArray *expectedClassChain = @[firstViewControllerClass,
+                                    secondViewControllerClass,
+                                    thirdViewControllerClass];
+    
+    NSArray *expectedExecutionOrder = @[firstNavigationCommand,
+                                        secondNavigationCommand];
+    
+    XCTAssertTrue([navigationController hasClassChain:expectedClassChain]);
+    XCTAssertTrue([RLDTestingNavigationCommand hasExecutionOrder:expectedExecutionOrder]);
+    XCTAssertEqual(navigationController.pushCount, 2);
+    XCTAssertEqual(navigationController.popCount, 0);
+    XCTAssertTrue(completionBlockExecuted);
 }
 
 @end

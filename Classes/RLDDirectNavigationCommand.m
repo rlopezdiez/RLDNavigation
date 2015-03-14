@@ -4,12 +4,6 @@
 
 #import "RLDNavigationSetup.h"
 
-@interface RLDNavigationCommand (ProtectedInitializer)
-
-- (instancetype)initWithNavigationSetup:(RLDNavigationSetup *)navigationSetup;
-
-@end
-
 @interface RLDDirectNavigationCommand ()
 
 @property (nonatomic, strong) NSArray *navigationCommandClassChain;
@@ -25,34 +19,30 @@
         [[self class] registerClassesConformingToNavigationCommandProtocol];
     }
     
+    NSMutableArray *navigationCommands = [NSMutableArray arrayWithCapacity:[self.navigationCommandClassChain count]];
+    
     RLDNavigationSetup *navigationSetup = [self.navigationSetup copy];
     
     for (Class navigationCommandClass in self.navigationCommandClassChain) {
         navigationSetup.destination = [navigationCommandClass destination];
         
-        id<RLDNavigationCommand> navigationCommand = [[navigationCommandClass alloc] initWithNavigationSetup:[navigationSetup copy]];
-        [self synchronousExecutionOfAnimationBlock:^{
-            [navigationCommand execute];
-        }];
+        id<RLDNavigationCommand> navigationCommand = [[navigationCommandClass alloc] init];
+        if (navigationCommand) {
+            [navigationCommand setNavigationSetup:[navigationSetup copy]];
+            
+            [[navigationCommands lastObject] setCompletionBlock:^{
+                [navigationCommand execute];
+            }];
+            
+            [navigationCommands addObject:navigationCommand];
+        }
         
         navigationSetup.origin = navigationSetup.destination;
     }
-}
-
-- (void)synchronousExecutionOfAnimationBlock:(void (^)())animationBlock {
-    __block BOOL finished = NO;
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        finished = YES;
-    }];
     
-    animationBlock();
+    [[navigationCommands lastObject] setCompletionBlock:self.completionBlock];
     
-    [CATransaction commit];
-    
-    while (!finished) {
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.01]];
-    }
+    [[navigationCommands firstObject] execute];
 }
 
 #pragma mark - Navigation command class chain lazy instantation and path searching

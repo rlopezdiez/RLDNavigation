@@ -5,6 +5,18 @@
 #import "RLDNavigationSetup.h"
 #import "RLDNavigationCommand+NavigationCommandRegister.h"
 
+@implementation NSRunLoop (Waiting)
+
++ (void)waitFor:(BOOL(^)(void))conditionBlock withTimeout:(NSTimeInterval)seconds {
+    NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:seconds];
+    
+    while (!conditionBlock() && [[NSDate date] compare:timeout] == NSOrderedAscending) {
+        [[self currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+    }
+}
+
+@end
+
 @implementation NSObject (TestingHelpers)
 
 + (Class)registerSubclassWithName:(NSString *)name {
@@ -86,11 +98,14 @@ static NSMutableArray *executedCommandClasses;
 + (Class)registerSubclassWithName:(NSString *)name origins:(NSArray *)origins destination:(Class)destination {
     Class newClass = [self registerSubclassWithName:name];
     
-    if (origins) [newClass setReturnValue:origins forSelector:@selector(origins)];
-    if (destination) [newClass setReturnValue:destination forSelector:@selector(destination)];
-    [newClass setReturnValue:nil forSelector:@selector(viewControllerStoryboardIdentifier)];
-    [newClass setReturnValue:nil forSelector:@selector(animatesTransitions)];
+    if (origins) [newClass setReturnObject:origins forSelector:@selector(origins)];
+    if (destination) [newClass setReturnObject:destination forSelector:@selector(destination)];
+    [newClass setReturnObject:nil forSelector:@selector(viewControllerStoryboardIdentifier)];
     
+    [self setReturnBlock:(id)^(id self) {
+        return NO;
+    } forSelector:@selector(animatesTransitions)];
+
     [newClass configureCanHandleNavigationSetupMethod];
         
     [RLDDirectNavigationCommand registerClassesConformingToNavigationCommandProtocol];
@@ -98,13 +113,19 @@ static NSMutableArray *executedCommandClasses;
     return newClass;
 }
 
-+ (void)setReturnValue:(id)returnValue forSelector:(SEL)selector {
++ (void)setReturnObject:(id)returnObject forSelector:(SEL)selector {
+    [self setReturnBlock:(id)^(id self) {
+        return returnObject;
+    } forSelector:selector];
+}
+
++ (void)setReturnBlock:(id)block forSelector:(SEL)selector {
     // If we don't use the metaclass, class_addMethod will add an instance method
     Class metaClass = objc_getMetaClass([NSStringFromClass(self) UTF8String]);
     
     Method method = class_getClassMethod(metaClass, selector);
     const char *types = method_getTypeEncoding(method);
-    IMP imp = [self impReturning:returnValue];
+    IMP imp = imp_implementationWithBlock(block);
     class_addMethod(metaClass, selector, imp, types);
 }
 
@@ -117,12 +138,6 @@ static NSMutableArray *executedCommandClasses;
         return navigationSetup.destination = [self destination];
     });
     class_addMethod(self, canHandleNavigationSetupSelector, canHandleNavigationSetupMethodImplementation, types);
-}
-
-+ (IMP)impReturning:(id)returnValue {
-    return imp_implementationWithBlock((id)^(id self) {
-        return returnValue;
-    });
 }
 
 + (void)clearExecutionRegistryAndUnregisterAllSubclasses {
@@ -145,9 +160,9 @@ static NSMutableArray *executedCommandClasses;
 }
 
 - (void)execute {
-    [super execute];
-    
     [executedCommandClasses addObject:[self class]];
+
+    [super execute];
 }
 
 @end
