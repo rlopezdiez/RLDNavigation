@@ -152,7 +152,7 @@ static NSMutableArray *executedCommandClasses;
 }
 
 + (BOOL)hasExecutionOrder:(NSArray *)executionOrder {
-    return [executedCommandClasses compareContentsWith:executionOrder];;
+    return [executedCommandClasses compareContentsWith:executionOrder];
 }
 
 + (BOOL)executed {
