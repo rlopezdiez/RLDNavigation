@@ -13,9 +13,8 @@
 }
 
 - (void)navigateToChatWithUserId:(NSString *)userId {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDChatViewController")
-                                   properties: @{@"userId" : userId}
-                         navigationController:self.navigationController] go];
+    [self goToDestination:NSClassFromString(@"RLDChatViewController")
+               properties: @{@"userId" : userId}];
 }
 
 @end

@@ -38,18 +38,14 @@ Once you have all the navigation commands that you need, you will be able to eas
 ...
 
 Class classOfDestinationViewController = NSClassFromString(@"ViewControllerClass");
-UINavigationController *navigationController = self.navigationController;
 
-[[RLDNavigationSetup setupWithDestination:classOfDestinationViewController
-                     navigationController:navigationController] go];
+[self goToDestination:classOfDestinationViewController];
 
 ```
 
 If you need to be informed when you navigation has finished, you can use `goWithCompletionBlock`, as in this example:
 ```objectivec
-[[RLDNavigationSetup setupWithDestination:classOfDestinationViewController
-                     navigationController:navigationController] 
-goWithCompletionBlock:^{
+[self goToDestination:classOfDestinationViewController] completionBlock:^{
     // This will be executed once the navigation has taken place
 }];
 ```
@@ -61,9 +57,7 @@ If you need to pass parameters or customize the view controllers when navigating
 For instance, if three view controllers are pushed when navigating in this example, all of them will get its `userName` property set to `John Doe`. In case any of the view controllers doesn't have this property, or it's readonly, it will be ignored:
 
 ```objectivec
-[[RLDNavigationSetup setupWithDestination:classOfDestinationViewController
-                               properties:@{@"userName" : @"John Doe"}
-                     navigationController:navigationController] go];
+[self goToDestination:classOfDestinationViewController properties:@{@"userName" : @"John Doe"}];
 ```
 
 #### Breadcrumbs
@@ -71,10 +65,9 @@ For instance, if three view controllers are pushed when navigating in this examp
 You can override the fully automatic flow calculation by specifying intermediate destinations that must be reached before aiming to the final target. Automated paths will be followed between these milestones when necessary.
 
 ```objectivec
-[[RLDNavigationSetup setupWithDestination:classOfDestinationViewController
-                               properties:@{@"userName" : @"John Doe"}
-                              breadcrumbs:@(firstIntermediateClass, secondIntermediateClass)
-                     navigationController:navigationController] go];
+[self goToDestination:classOfDestinationViewController
+           properties:@{@"userName" : @"John Doe"}
+          breadcrumbs:@(firstIntermediateClass, secondIntermediateClass)];
 ```
 
 Breadcrumbs can help you creating complex routes, and are also a helpful way to replace URL-like navigation definitions.
@@ -131,7 +124,7 @@ When using manual registering, the best way to make sure all your classes are re
 To use the latest stable release of `RLDNavigation`, just add the following to your project `Podfile`:
 
 ```
-pod 'RLDNavigation', '~> 0.5.0' 
+pod 'RLDNavigation', '~> 0.6.0' 
 ```
 
 If you like to live on the bleeding edge, you can use the `master` branch with:

@@ -11,6 +11,8 @@
 		455AC0121AA68A7E00B801BD /* RLDContactCardViewModelNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 455AC0111AA68A7E00B801BD /* RLDContactCardViewModelNavigationCommand.m */; };
 		455AC0151AA68AB500B801BD /* RLDContactCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 455AC0141AA68AB500B801BD /* RLDContactCardViewController.m */; };
 		455AC0181AA68C0500B801BD /* RLDContactCardViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 455AC0171AA68C0500B801BD /* RLDContactCardViewModel.m */; };
+		456F30671AE7F2BC004B10F8 /* UIViewController+RLDNavigationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 456F30661AE7F2BC004B10F8 /* UIViewController+RLDNavigationHelper.m */; };
+		456F306A1AE7F840004B10F8 /* UIView+RLDNavigationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 456F30691AE7F840004B10F8 /* UIView+RLDNavigationHelper.m */; };
 		458B52A81A9F32A900E2E7D0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 458B52A71A9F32A900E2E7D0 /* main.m */; };
 		458B52AB1A9F32A900E2E7D0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 458B52AA1A9F32A900E2E7D0 /* AppDelegate.m */; };
 		458B52B11A9F32A900E2E7D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 458B52AF1A9F32A900E2E7D0 /* Main.storyboard */; };
@@ -48,6 +50,10 @@
 		455AC0141AA68AB500B801BD /* RLDContactCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RLDContactCardViewController.m; path = "View controllers/RLDContactCardViewController.m"; sourceTree = "<group>"; };
 		455AC0161AA68C0500B801BD /* RLDContactCardViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RLDContactCardViewModel.h; path = "View controllers/RLDContactCardViewModel.h"; sourceTree = "<group>"; };
 		455AC0171AA68C0500B801BD /* RLDContactCardViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RLDContactCardViewModel.m; path = "View controllers/RLDContactCardViewModel.m"; sourceTree = "<group>"; };
+		456F30651AE7F2BC004B10F8 /* UIViewController+RLDNavigationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RLDNavigationHelper.h"; sourceTree = "<group>"; };
+		456F30661AE7F2BC004B10F8 /* UIViewController+RLDNavigationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RLDNavigationHelper.m"; sourceTree = "<group>"; };
+		456F30681AE7F840004B10F8 /* UIView+RLDNavigationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RLDNavigationHelper.h"; sourceTree = "<group>"; };
+		456F30691AE7F840004B10F8 /* UIView+RLDNavigationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RLDNavigationHelper.m"; sourceTree = "<group>"; };
 		458B52A21A9F32A900E2E7D0 /* NavigationPrototype.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationPrototype.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		458B52A61A9F32A900E2E7D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		458B52A71A9F32A900E2E7D0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -199,6 +205,10 @@
 				45B1C7171AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.m */,
 				45A60E821AA22E63004FB8F4 /* RLDPushPopNavigationCommand.h */,
 				45A60E831AA22E63004FB8F4 /* RLDPushPopNavigationCommand.m */,
+				456F30651AE7F2BC004B10F8 /* UIViewController+RLDNavigationHelper.h */,
+				456F30661AE7F2BC004B10F8 /* UIViewController+RLDNavigationHelper.m */,
+				456F30681AE7F840004B10F8 /* UIView+RLDNavigationHelper.h */,
+				456F30691AE7F840004B10F8 /* UIView+RLDNavigationHelper.m */,
 			);
 			name = RLDNavigation;
 			path = ../Classes;
@@ -306,7 +316,9 @@
 			files = (
 				45A60E8A1AA22E63004FB8F4 /* UINavigationController+RLDNavigationSetup.m in Sources */,
 				458B52AB1A9F32A900E2E7D0 /* AppDelegate.m in Sources */,
+				456F306A1AE7F840004B10F8 /* UIView+RLDNavigationHelper.m in Sources */,
 				458B52DB1A9F38C400E2E7D0 /* RLDMenuViewController.m in Sources */,
+				456F30671AE7F2BC004B10F8 /* UIViewController+RLDNavigationHelper.m in Sources */,
 				45A60E881AA22E63004FB8F4 /* RLDNavigationSetup.m in Sources */,
 				45B1C7181AA235EF00B50484 /* RLDDirectNavigationCommand+PathSearching.m in Sources */,
 				458B52A81A9F32A900E2E7D0 /* main.m in Sources */,

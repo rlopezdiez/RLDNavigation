@@ -17,6 +17,8 @@
 		450191AA1AAA427E0096B027 /* RLDNavigationSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4501919E1AAA427E0096B027 /* RLDNavigationSetup.m */; };
 		450191AB1AAA427E0096B027 /* RLDPushPopNavigationCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 450191A01AAA427E0096B027 /* RLDPushPopNavigationCommand.m */; };
 		450191AC1AAA427E0096B027 /* UINavigationController+RLDNavigationSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 450191A21AAA427E0096B027 /* UINavigationController+RLDNavigationSetup.m */; };
+		4595FAA61AE7FC9000FAEDCB /* UIViewController+RLDNavigationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4595FAA51AE7FC9000FAEDCB /* UIViewController+RLDNavigationHelper.m */; };
+		4595FAA91AE7FC9700FAEDCB /* UIView+RLDNavigationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4595FAA81AE7FC9700FAEDCB /* UIView+RLDNavigationHelper.m */; };
 		45DC595A1AA4DFD400E9AEB1 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC59591AA4DFD400E9AEB1 /* Tests.m */; };
 		45DC595C1AA4DFFB00E9AEB1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45DC595B1AA4DFFB00E9AEB1 /* Info.plist */; };
 		45DC597F1AA4E96F00E9AEB1 /* TestHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DC597E1AA4E96F00E9AEB1 /* TestHelpers.m */; };
@@ -45,6 +47,10 @@
 		450191A11AAA427E0096B027 /* UINavigationController+RLDNavigationSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+RLDNavigationSetup.h"; sourceTree = "<group>"; };
 		450191A21AAA427E0096B027 /* UINavigationController+RLDNavigationSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+RLDNavigationSetup.m"; sourceTree = "<group>"; };
 		452B76551AA4DF9600B321BC /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4595FAA41AE7FC9000FAEDCB /* UIViewController+RLDNavigationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RLDNavigationHelper.h"; sourceTree = "<group>"; };
+		4595FAA51AE7FC9000FAEDCB /* UIViewController+RLDNavigationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RLDNavigationHelper.m"; sourceTree = "<group>"; };
+		4595FAA71AE7FC9700FAEDCB /* UIView+RLDNavigationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RLDNavigationHelper.h"; sourceTree = "<group>"; };
+		4595FAA81AE7FC9700FAEDCB /* UIView+RLDNavigationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RLDNavigationHelper.m"; sourceTree = "<group>"; };
 		45DC59591AA4DFD400E9AEB1 /* Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		45DC595B1AA4DFFB00E9AEB1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45DC597D1AA4E96F00E9AEB1 /* TestHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHelpers.h; sourceTree = "<group>"; };
@@ -86,6 +92,10 @@
 				450191A01AAA427E0096B027 /* RLDPushPopNavigationCommand.m */,
 				450191A11AAA427E0096B027 /* UINavigationController+RLDNavigationSetup.h */,
 				450191A21AAA427E0096B027 /* UINavigationController+RLDNavigationSetup.m */,
+				4595FAA41AE7FC9000FAEDCB /* UIViewController+RLDNavigationHelper.h */,
+				4595FAA51AE7FC9000FAEDCB /* UIViewController+RLDNavigationHelper.m */,
+				4595FAA71AE7FC9700FAEDCB /* UIView+RLDNavigationHelper.h */,
+				4595FAA81AE7FC9700FAEDCB /* UIView+RLDNavigationHelper.m */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -187,7 +197,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				45DC597F1AA4E96F00E9AEB1 /* TestHelpers.m in Sources */,
+				4595FAA61AE7FC9000FAEDCB /* UIViewController+RLDNavigationHelper.m in Sources */,
 				450191A61AAA427E0096B027 /* RLDDirectNavigationCommand.m in Sources */,
+				4595FAA91AE7FC9700FAEDCB /* UIView+RLDNavigationHelper.m in Sources */,
 				450191AC1AAA427E0096B027 /* UINavigationController+RLDNavigationSetup.m in Sources */,
 				450191AA1AAA427E0096B027 /* RLDNavigationSetup.m in Sources */,
 				450191AB1AAA427E0096B027 /* RLDPushPopNavigationCommand.m in Sources */,

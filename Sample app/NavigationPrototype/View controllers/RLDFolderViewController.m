@@ -13,9 +13,8 @@
 }
 
 - (void)navigateToProfileWithUserId:(NSString *)userId {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDProfileViewController")
-                                   properties: @{@"userId" : userId}
-                         navigationController:self.navigationController] go];
+    [self goToDestination:NSClassFromString(@"RLDProfileViewController")
+               properties: @{@"userId" : userId}];
 }
 
 @end

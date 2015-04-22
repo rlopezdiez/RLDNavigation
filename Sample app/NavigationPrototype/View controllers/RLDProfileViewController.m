@@ -17,32 +17,27 @@
 }
 
 - (IBAction)chatWithUserTapped {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDChatViewController")
-                                   properties: @{@"userId" : self.userId}
-                         navigationController:self.navigationController] go];
+    [self goToDestination:NSClassFromString(@"RLDChatViewController")
+               properties: @{@"userId" : self.userId}];
 }
 
 - (IBAction)jumpToConnectionsTapped {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDConnectionsViewController")
-                         navigationController:self.navigationController] go];
+    [self goToDestination:NSClassFromString(@"RLDConnectionsViewController")];
 }
 
 - (IBAction)jumpToMenuTapped {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDMenuViewController")
-                         navigationController:self.navigationController] go];
+    [self goToDestination:NSClassFromString(@"RLDMenuViewController")];
 }
 
 - (IBAction)jumpToProfileForSecondUserTapped {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDProfileViewController")
-                                   properties: @{@"userId" : @"2"}
-                         navigationController:self.navigationController] go];
+    [self goToDestination:NSClassFromString(@"RLDProfileViewController")
+               properties: @{@"userId" : @"2"}];
 }
 
 - (IBAction)jumpToChatWithSecondUserTapped {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDChatViewController")
-                                   properties: @{@"userId" : @"2"}
-                                  breadcrumbs:@[NSClassFromString(@"RLDProfileViewController")]
-                         navigationController:self.navigationController] go];
+    [self goToDestination:NSClassFromString(@"RLDChatViewController")
+               properties: @{@"userId" : @"2"}
+              breadcrumbs:@[NSClassFromString(@"RLDProfileViewController")]];
 }
 
 @end

@@ -67,12 +67,9 @@ static NSString *const secondViewControllerWithPropertiesClassName = @"RLDSecond
 - (void)synchronousGoTo:(Class)destination
             breadcrumbs:(NSArray *)breadcrumbs
              properties:(NSDictionary *)properties {
-    RLDNavigationSetup *navigationSetup = [RLDNavigationSetup setupWithDestination:destination
-                                                                        properties:properties
-                                                                       breadcrumbs:breadcrumbs
-                                                              navigationController:navigationController];
-    
-    [navigationSetup go];
+    [navigationController.topViewController goToDestination:destination
+                                                 properties:properties
+                                                breadcrumbs:breadcrumbs];
     [NSRunLoop waitFor:^BOOL{
         return [navigationController.topViewController class] == destination;
     } withTimeout:0.2];
@@ -603,7 +600,7 @@ static NSString *const secondViewControllerWithPropertiesClassName = @"RLDSecond
     //   and we wait until the execution finishes
     NSString *propertyValue = @"expectedValue";
     [self synchronousGoTo:thirdViewControllerClass
-              properties:@{propertyName : propertyValue}];
+               properties:@{propertyName : propertyValue}];
     
     // THEN:
     //   The class chain will be 1 > 2 > 3

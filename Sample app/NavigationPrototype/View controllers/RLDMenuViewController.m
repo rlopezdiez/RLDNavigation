@@ -7,26 +7,22 @@
 @implementation RLDMenuViewController
 
 - (IBAction)peopleNearbyTapped {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDFolderViewController")
-                         navigationController:self.navigationController] go];
+    [self goToDestination:NSClassFromString(@"RLDFolderViewController")];
 }
 
 - (IBAction)connectionsTapped {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDConnectionsViewController")
-                         navigationController:self.navigationController] go];
+    [self goToDestination:NSClassFromString(@"RLDConnectionsViewController")];
 }
 
 - (IBAction)chatTapped {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDChatViewController")
-                                   properties:@{@"userId" : @"1"}
-                         navigationController:self.navigationController] go];
+    [self goToDestination:NSClassFromString(@"RLDChatViewController")
+               properties:@{@"userId" : @"1"}];
 }
 
 - (IBAction)chatFromProfileTapped {
-    [[RLDNavigationSetup setupWithDestination:NSClassFromString(@"RLDChatViewController")
-                                   properties:@{@"userId" : @"1"}
-                                  breadcrumbs: @[NSClassFromString(@"RLDProfileViewController")]
-                         navigationController:self.navigationController] go];
+    [self goToDestination:NSClassFromString(@"RLDChatViewController")
+               properties:@{@"userId" : @"1"}
+              breadcrumbs: @[NSClassFromString(@"RLDProfileViewController")]];
 }
 
 - (IBAction)profileTapped {

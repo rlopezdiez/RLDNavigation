@@ -18,3 +18,5 @@
 
 #import "RLDNavigationSetup.h"
 #import "RLDNavigationSetup+RLDNavigationCommand.h"
+#import "UIViewController+RLDNavigationHelper.h"
+#import "UIView+RLDNavigationHelper.h"
