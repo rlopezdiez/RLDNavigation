@@ -43,7 +43,7 @@ Class classOfDestinationViewController = NSClassFromString(@"ViewControllerClass
 
 ```
 
-If you need to be informed when you navigation has finished, you can use `goWithCompletionBlock`, as in this example:
+If you need to be informed when you navigation has finished, you can use `goToDestination:completionBlock:`, as in this example:
 ```objectivec
 [self goToDestination:classOfDestinationViewController] completionBlock:^{
     // This will be executed once the navigation has taken place
